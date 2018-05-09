@@ -1,0 +1,63 @@
+
+<nav class="nav-extended yellow accent-4"><!-- valores anteriores black -->
+  <div class="nav-wrapper">
+    <div class="brand-logo"><img src="./assets/logo-faea.png"></div>
+    
+
+    
+    <a routerLink="" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <!--div class="center indigo-text" id="titulocentral">Facultad de Economia - Clases</div-->
+      <div class="right indigo-text" id="hoyuppercase"> {{hoy |uppercase}}</div>
+    <!--/div-->
+    
+    
+    <ul class="side-nav" id="mobile-demo">
+      <li><a routerLink=""><i class="material-icons">Inicio</i></a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container-fluid" >
+
+    <table class="striped centered" [class.responsive-table]="tablaResponsiva">
+  <thead>
+    <tr class="texto-titulo-tabla">
+      <th>HORARIO</th>
+      <th>ACTIVIDAD</th>
+      <th>TIPO</th>
+      <th>PROFESOR</th>
+      <th>AULA</th>
+      <th>ESTADO</th>
+    </tr>
+  </thead>
+  <tbody>
+      <!--  | orderBy:order:reverse -->
+     <tr  *ngFor="let actividad of actividades | orderBy:order:reverse" [class.encurso]="estaEnCurso(actividad)">
+      <!-- Tratando de definir un observable que cambie el fondo de la fila que este cursando ahora mismo.   -->
+      <td>{{actividad.horaInicio}} : {{actividad.horaFin}}</td>
+      <td> {{actividad.descripcion}}</td><!--  <marquee behavior="alternate" scrolldelay="300"> </marquee>-->
+      <td class="green">
+       {{actividad.tipoActividad}}
+      </td>
+      <td>
+       {{actividad.nombre}}
+      </td>
+      <td>{{actividad.zonaAula}}</td>
+      <td>
+        <div class="estado elemento-tabla"
+        [class.green] = "actividad.estadoActividad == 'Normal'"
+        [class.yellow] = "actividad.estadoActividad == 'Se Cambio'"
+        [class.darken-1] = "actividad.estadoActividad == 'Se Cambio'"
+        [class.black-text] = "actividad.estadoActividad == 'Se Cambio'"
+        [class.red] = "actividad.estadoActividad == 'Suspendida'">
+         {{actividad.estadoActividad}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>
+
