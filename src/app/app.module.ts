@@ -11,7 +11,7 @@ import { AdminComponent } from './admin/admin.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { MainComponent } from './main/main.component';
 import { HeaderComponent } from './header/header.component';
-import { modEvento } from './modEvento/modEvento.component';
+import { EventoDetalle } from './evento-detalle/evento-detalle.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthService } from './providers/auth.service';
 import { FirebaseconnectionService } from './providers/firebaseconnection.service';
@@ -23,12 +23,11 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
-//materialize
+//Material
 import { MatDatepickerModule, MatNativeDateModule , MatCheckboxModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule, MatSelectModule} from '@angular/material';
-//import { MaterializeModule } from 'angular2-materialize';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -39,7 +38,7 @@ import { environment } from '../environments/environment';
     NotificacionesComponent,
     MainComponent,//Pag. inicial admin, puede modificar items en pantalla
     HeaderComponent,
-    modEvento,
+    EventoDetalle,
     PageNotFoundComponent,
     AuthenticationComponent
   ],

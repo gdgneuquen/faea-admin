@@ -2,12 +2,8 @@
 
 <div>
 
-<div class="container" [hidden]="!isUserLoggedIn()" *ngIf="eventoObject" >
-  <!--
-    <div class="row">
-      <pre>{{(eventoObject | json)  }}</pre>
-    </div>
-  -->
+<div class="container" [hidden]="!isUserLoggedIn()" *ngIf="evento" >
+ 
   <div class="row">
     <div class="col s12 m6 l3">
         <h6>HORA INICIO(*)</h6>
@@ -23,24 +19,22 @@
     </div>
 
   </div>
-
   <div class="row">
     <div class="col s12 m6 l3">
       <div class="input-field">
         <mat-select   id="horaInicio"
-                [(ngModel)]="eventoObject.horaInicio"
+                [(ngModel)]="evento.horaInicio"
                 placeholder="Seleccione..."
                 floatPlaceholder="never">
-          <mat-option [value]="number" *ngFor="" >{{ number }}
+          <mat-option [value]="number" *ngFor="let number of numberHora" >{{ number }}
           </mat-option>
         </mat-select>
-        <label for="horaInicio" data-error="campo requerido" data-success="right"></label>
       </div>
     </div>
     <div class="col s12 m6 l3">
       <div class="input-field">
         <mat-select id="horaFin"
-                [(ngModel)]="eventoObject.horaFin"
+                [(ngModel)]="evento.horaFin"
                 placeholder="Seleccione..."
                 floatPlaceholder="never">
           <mat-option [value]="number" *ngFor="let number of numberHora" >{{ number }}</mat-option>
@@ -51,8 +45,8 @@
     <div class="col s12 m6 l3">
                 <input matInput [matDatepicker]="pickerDesde"
                         style="width: 120px;" name="pickerDesde" id="pickerDesde"
-                        [min]="minDate" [max]="maxDate" [value]="eventoObject.pickerDesde"
-                        [(ngModel)]="eventoObject.pickerDesde"
+                        [min]="minDate" [max]="maxDate" [value]="evento.pickerDesde"
+                        [(ngModel)]="evento.pickerDesde"
                         placeholder="Seleccione..." floatPlaceholder="never"
                         floatPlaceholder="never">
                         <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
@@ -62,8 +56,8 @@
       <div class="col s12 m6 l3">
                 <input matInput [matDatepicker]="pickerHasta"
                         style="width: 120px;" name="pickerHasta" id="pickerHasta"
-                        [min]="minDate" [max]="maxDate" [value]="eventoObject.pickerHasta"
-                        [(ngModel)]="eventoObject.pickerHasta"
+                        [min]="minDate" [max]="maxDate" [value]="evento.pickerHasta"
+                        [(ngModel)]="evento.pickerHasta"
                         placeholder="Seleccione..."
                         floatPlaceholder="never">
                         <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
@@ -80,13 +74,13 @@
   <div class="row">
     <div class="col s12 m12 l12">
         <section >
-          <mat-checkbox [checked]="eventoObject.chk_lun" [(ngModel)]="eventoObject.chk_lun">Lunes</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_ma"  [(ngModel)]="eventoObject.chk_ma">Martes</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_mi"  [(ngModel)]="eventoObject.chk_mi">Miercoles</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_ju"  [(ngModel)]="eventoObject.chk_ju">Jueves</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_vi"  [(ngModel)]="eventoObject.chk_vi">Viernes</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_sa"  [(ngModel)]="eventoObject.chk_sa">Sabado</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_do"  [(ngModel)]="eventoObject.chk_do">Domingo</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[0]" [(ngModel)]="evento.dias[0]">Lunes</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[1]"  [(ngModel)]="evento.dias[1]">Martes</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[2]"  [(ngModel)]="evento.dias[2]">Miercoles</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[3]"  [(ngModel)]="evento.dias[3]">Jueves</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[4]"  [(ngModel)]="evento.dias[4]">Viernes</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[5]"  [(ngModel)]="evento.dias[5]">Sabado</mat-checkbox>
+          <mat-checkbox [checked]="evento.dias[6]"  [(ngModel)]="evento.dias[6]">Domingo</mat-checkbox>
         </section>
     </div>
     </div>
@@ -108,7 +102,7 @@
 
      <div class="col s12 m6 l3">
         <mat-select id="periodos"
-                [(ngModel)]="eventoObject.periodo"
+                [(ngModel)]="evento.periodo"
                 placeholder="Seleccione..."
                 style="min-width: 200px;"
                 class="browser-default black-text browser-default"
@@ -119,7 +113,7 @@
     </div>
     <div class="col s12 m6 l5">
         <mat-select   id="tipoDeActividad"
-                [(ngModel)]="eventoObject.tipoActividad"
+                [(ngModel)]="evento.tipoActividad"
                 placeholder="Seleccione..."
                 class="browser-default black-text browser-default"
                 style="min-width: 200px;"
@@ -142,7 +136,10 @@
       <div class="input-field col s6">
             <input placeholder="Nombre de la Actividad (*)"
                     id="descripcion" type="text" name="descripcion"
-                    [(ngModel)]="eventoObject.descripcion"
+
+                   [(ngModel)]="evento.descripcion"
+                   
+            
                    class="validate">
             <label for="descripcion"></label>
       </div>
@@ -151,7 +148,7 @@
       <div class="input-field col s6">
             <input placeholder="Referente/Profesor (*)"
                     id="nombre" type="text" name="nombre"
-                    [(ngModel)]="eventoObject.nombre"
+                    [(ngModel)]="evento.nombre"
                    class="validate">
             <label for="nombre"></label>
       </div>
@@ -167,7 +164,7 @@
   <div class="row">
     <div class="col s12 m6 l4">
         <mat-select   id="zonaAula"
-                [(ngModel)]="eventoObject.zonaAula"
+                [(ngModel)]="evento.zonaAula"
                 placeholder="Seleccione..."
                 class="browser-default black-text browser-default"
                 style="min-width: 250px;"
@@ -178,7 +175,7 @@
     </div>
     <div class="col s12 m6 l4">
         <mat-select   id="estadoAct"
-                [(ngModel)]="eventoObject.estadoActividad"
+                [(ngModel)]="evento.estadoActividad"
                 placeholder="Seleccione..."
                 class="browser-default black-text browser-default"
                 style="min-width: 250px;"
@@ -192,12 +189,12 @@
   </div>
   <div class="row">
     <div class="col s2">
-      <a (click)="SendEvento(eventoObject)"
+      <a (click)="update(evento)"
           class="waves-effect waves-light indigo darken-1 btn">OK</a>
 
     </div>
     <div class="col s1">
-      <a (click)="goToMain()" class="waves-effect waves-light indigo darken-1 btn">CANCEL</a>
+      <a (click)="cancel()" class="waves-effect waves-light indigo darken-1 btn">CANCEL</a>
     </div>
   </div>
 </div>

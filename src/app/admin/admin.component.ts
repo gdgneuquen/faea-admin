@@ -30,15 +30,15 @@ export class AdminComponent implements OnInit  {
   maxDate = new Date(2020, 0, 1);
   hoy = moment().locale('es').format('DD/M/YYYY');
 
-  actividades: AngularFireList<any[]>;
+  actividades: Observable<any[]>;
   numberHora: any[];
-  tiposDeActividades: AngularFireList<any[]>;
-  estadoActividades: AngularFireList<any[]>;
+  tiposDeActividades: Observable<any[]>;
+  estadoActividades: Observable<any[]>;
   evento: AngularFireObject<any>;
   eventoObject = new Evento();
   id: any; // id recibido
   periodos: string[];
-  aulas: AngularFireList<any[]>;
+  aulas: Observable<any[]>;
   msgVal: string = ''; //mensaje de entrada del form
 
   constructor(
@@ -49,12 +49,12 @@ export class AdminComponent implements OnInit  {
 
   ngOnInit() {
     this.eventoObject = new Evento('', '', [false,false,false,false,false,false,false], '', '', '', '', '', '', '', '', '');
-    this.actividades = this.afService.getListActividades();
-    this.aulas = this.afService.getListAulas(50);
-    this.estadoActividades = this.afService.getListEstados();
-    this.tiposDeActividades = this.afService.getListTiposActividades();
-    this.numberHora = this.afService.getHorario();
-    this.periodos = this.afService.getListPeriodos();
+    this.actividades = this.afService.getActividades();
+    this.aulas = this.afService.getAulas();
+    this.estadoActividades = this.afService.getEstados();
+    this.tiposDeActividades = this.afService.getTiposActividades();
+    this.numberHora = this.afService.getHorarios();
+    this.periodos = this.afService.getPeriodos();
     this.dateAdapter.setLocale('es-ar');
 
   }

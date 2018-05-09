@@ -16,12 +16,12 @@
       <div class="col m2 center texto-titulo-tabla">
         PROFE/REFERENTE
       </div>
-      <div class="col m1 center texto-titulo-tabla">
+      <!--div class="col m1 center texto-titulo-tabla">
         DESDE
       </div>
       <div class="col m1 center texto-titulo-tabla">
         HASTA
-      </div>
+      </div-->
       <div class="col m1 center texto-titulo-tabla">
         AULA
       </div>
@@ -48,12 +48,12 @@
       <div class="col m2 elemento-tabla">
         {{actividad.nombre}}
       </div>
-      <div class="col m1 elemento-tabla">
+      <!--div class="col m1 elemento-tabla">
            {{actividad.pickerDesde  | date: 'dd/MM/yy'}}
       </div>
           <div class="col m1 elemento-tabla">
            {{actividad.pickerHasta  | date: 'dd/MM/yy'}}
-      </div>
+      </div-->
       <div class="col m1 elemento-tabla">
            {{actividad.zonaAula}}
       </div>
@@ -66,7 +66,8 @@
       </div>
 
       <div class="col m1 elemento-tabla center" >
-         <a class="iconsch edit" (click)="modificarActivity(actividad.key)"><i class="small material-icons">edit</i></a>
+          <!--a routerLink="/detalle/{{actividad.key}}"> ... ver mas</a-->
+         <a class="iconsch edit" routerLink="/detalle/{{actividad.key}}"><i class="small material-icons">edit</i></a>
          <a class="iconsch delete" (click)="DeleteActivity(actividad.key)"><i class="small material-icons">delete</i></a>
       </div>
     </div>

@@ -46,7 +46,7 @@ export class MainComponent implements OnInit {
   }
 
   modificarActivity(key:string){
-    this.router.navigate(['/modEvento', key]);
+    this.router.navigate(['/detalle', key]);
   }
 
 

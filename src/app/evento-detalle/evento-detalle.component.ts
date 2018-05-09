@@ -1,11 +1,13 @@
-  import {Component, Input, NgZone, OnDestroy, OnChanges, OnInit, DoCheck, ViewChild, SimpleChanges} from '@angular/core';
+  import {Component,OnInit} from '@angular/core';
   import { RouterModule, Router} from '@angular/router';
   import { ActivatedRoute, ParamMap } from '@angular/router';
   import { FormBuilder } from '@angular/forms';
-
-  import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+  import { Observable } from 'rxjs/Observable';
 
   import * as moment from 'moment';
+
+  import { AngularFireObject } from 'angularfire2/database';
+
 
   import { AuthService } from '../providers/auth.service';
   import { FirebaseconnectionService } from '../providers/firebaseconnection.service';
@@ -16,58 +18,56 @@
   import { MatDatepicker } from '@angular/material';
 
   @Component({
-    selector: 'modevent-app',
-    templateUrl: './modEvento.component.html',
-    styleUrls: ['./modEvento.component.css']
+    selector: 'app-evento-detalle',
+    templateUrl: './evento-detalle.component.html',
+    styleUrls: ['./evento-detalle.component.css']
   })
 
-  export class modEvento implements OnInit {
+  export class EventoDetalle implements OnInit {
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
     hoy = moment().locale('es').format('LLLL');
+    numberHora: any[];
     // moment().locale('es').format('L');
     // moment().locale('es').format('YYYY-MM-DD'); //formato firebase
-    // actividades es tipo any para poder recibir todo lo que le trae el servicio
-    actividades: AngularFireList<any[]>;
-    numberHora: any[];
-    tiposDeActividades: AngularFireList<any[]>;
-    estadoActividades: AngularFireList<any[]>;
-    evento: AngularFireObject<any>;
-    eventoObject: Evento;
     id: any; // id recibido
+    //evento: Observable<any>;
+    evento: Evento;
+    tiposDeActividades: Observable<any[]>;
+    estadoActividades: Observable<any[]>;
     periodos: string[];
-    aulas: AngularFireList<any[]>;
+    aulas: Observable<any[]>;
 
     constructor(
       private authService: AuthService,
       private afService: FirebaseconnectionService,
       private router: Router,
       private route: ActivatedRoute,
-      private dateAdapter: DateAdapter<Date>) { }
+      private dateAdapter: DateAdapter<Date>) { 
+
+      this.id = this.route.snapshot.params['id'];
+      this.afService.getActividadByKey(this.id) 
+      .snapshotChanges().subscribe(action => {
+       this.evento=action.payload.val();
+      });
+          
+      this.aulas = this.afService.getAulas();
+      this.estadoActividades = this.afService.getEstados();
+      this.tiposDeActividades = this.afService.getTiposActividades();
+      this.numberHora = this.afService.getHorarios();
+      this.periodos = this.afService.getPeriodos();
+      this.dateAdapter.setLocale('es-ar');
+      }
 
     ngOnInit() {
-      this.id = this.route.snapshot.params['id'];
-      this.afService.getActividadByKey(this.id) //{ preserveSnapshot: true }
-        .snapshotChanges().subscribe(action => {
-          console.log(action.type);
-          console.log(action.key)
-          console.log(action.payload.val())
-        });
-        
-      this.actividades = this.afService.getListActividades();
-      this.aulas = this.afService.getListAulas(50);
-      this.estadoActividades = this.afService.getListEstados();
-      this.tiposDeActividades = this.afService.getListTiposActividades();
-      this.numberHora = this.afService.getHorario();
-      this.periodos = this.afService.getListPeriodos();
-      this.dateAdapter.setLocale('es-ar');
+      
     }
 
     isUserLoggedIn() {
        return this.authService.loggedIn;
     }
 
-    SendEvento(eventoSend: Evento) {
+    update(eventoSend: Evento) {
       // TODO: hacer contrl de error y validaciones
       if ( eventoSend.horaInicio === "" || eventoSend.horaFin === "" ||
           eventoSend.descripcion === "" || eventoSend.nombre === "" ||
@@ -78,9 +78,10 @@
       eventoSend.pickerDesde = moment(eventoSend.pickerDesde).locale('es').format('YYYY-MM-DD');
       eventoSend.pickerHasta = moment(eventoSend.pickerHasta).locale('es').format('YYYY-MM-DD'),
       this.afService.updateActividadByKey(this.id, eventoSend);
-      this.goToMain();
+      this.cancel();
     }
-    goToMain() {
+    
+    cancel() {
       this.router.navigate(['/main']);
     }
   }
