@@ -10,7 +10,7 @@ import {NotificacionesComponent} from './notificaciones/notificaciones.component
 export const routes: Routes = [
     { path: 'main',  component: MainComponent  },
     { path: 'admin',  component: AdminComponent  },
-    { path: 'event', component: EventoComponent },
+    { path: 'evento', component: EventoComponent },
     { path: 'detalle/:id', component: EventoDetalle },
     { path: 'notificaciones',   component: NotificacionesComponent},
     { path: '', redirectTo: '/main', pathMatch: 'full' },

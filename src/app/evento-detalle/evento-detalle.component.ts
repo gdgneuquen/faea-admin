@@ -6,11 +6,8 @@
 
   import * as moment from 'moment';
 
-  import { AngularFireObject } from 'angularfire2/database';
-
-
-  import { AuthService } from '../providers/auth.service';
   import { FirebaseconnectionService } from '../providers/firebaseconnection.service';
+  import { AuthService } from '../providers/auth.service';
   import {Evento} from "../commons/evento.model";
   
   //Material
@@ -46,10 +43,10 @@
       private dateAdapter: DateAdapter<Date>) { 
 
       this.id = this.route.snapshot.params['id'];
-      this.afService.getActividadByKey(this.id) 
+    /*  this.afService.getActividadByKey(this.id) 
       .snapshotChanges().subscribe(action => {
        this.evento=action.payload.val();
-      });
+      });*/
           
       this.aulas = this.afService.getAulas();
       this.estadoActividades = this.afService.getEstados();

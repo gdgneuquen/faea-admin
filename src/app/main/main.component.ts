@@ -1,11 +1,24 @@
-import { AuthService } from '../providers/auth.service';
-import { Component, NgZone, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import * as firebase from 'firebase/app';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { FirebaseconnectionService } from '../providers/firebaseconnection.service';
+import { AuthService } from '../providers/auth.service';
 import * as moment from 'moment';
+
+export interface Evento {
+  key?: string;
+  descripcion?: string;
+  dias?: any[];
+  horaFin?: string;
+  horaInicio?: string;
+  nombre?: string;
+  pickerDesde?: string;
+  pickerHasta?: string;
+  estadoActividad?: string;
+  tipoActividad?: string;
+  zonaAula?: string;
+  periodo?: string;
+}
 
 @Component({
   selector: 'app-main',
@@ -15,24 +28,25 @@ import * as moment from 'moment';
 export class MainComponent implements OnInit {
 
   hoy = moment().locale('es').format('LLLL');
-  //actividades es tipo any para poder recibir todo lo que le trae el servicio
-  actividadesRef: AngularFireList<any>;
-  actividades: Observable<any[]>;
+  actividades: Observable<Evento[]>;
   msgVal: string = ''; //mensaje de entrada del form
   selectedActividad: string = '';
+  displayedColumns: string[] = ['periodo', 'horainicio', 'horafin','actividad', 'tipo', 'profe','aula'];
+  dataSource = new MatTableDataSource();
 
-  constructor(private authService: AuthService,
-            public af: AngularFireDatabase,
-            private router: Router){
-      this.actividadesRef = af.list('actividades');
-      // Use snapshotChanges().map() to store the key
-      this.actividades = this.actividadesRef.snapshotChanges().map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      });
-    }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  
+
+  constructor(
+      private authService: AuthService,
+      public af: FirebaseconnectionService
+  ){}
 
   ngOnInit(){
+    return this.af.getActividadesRef().subscribe(res => this.dataSource.data = res);
   }
+
   isUserLoggedIn(){
      return this.authService.loggedIn;
   }
@@ -40,14 +54,28 @@ export class MainComponent implements OnInit {
   deleteActivity(key:string){
       //alert("la Fecha inicio y hora inicio tienen que estar llennas");
       if(confirm("Esta seguro que desea borrar el evento?")) {
-        this.actividadesRef.remove( key);
+       // this.actividadesRef.remove( key);
         this.msgVal = '';
       }
   }
 
   modificarActivity(key:string){
-    this.router.navigate(['/detalle', key]);
+   // this.router.navigate(['/detalle', key]);
   }
 
+  /**
+   * Set the paginator and sort after the view init since this component will
+   * be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 
 }

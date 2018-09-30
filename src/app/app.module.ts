@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app-router.module';
 //FORMS
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
@@ -19,15 +19,16 @@ import { PageNotFoundComponent} from './notfound/page.not.found.component';
 import { OrderModule } from 'ngx-order-pipe';
 
 //Firebase
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
 
 //Material
 import { MatDatepickerModule, MatNativeDateModule , MatCheckboxModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material';
-import {MatInputModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule,MatMenuModule,MatToolbarModule,MatIconModule} from '@angular/material';
+import {MatInputModule, MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule} from '@angular/material';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -47,14 +48,15 @@ import { environment } from '../environments/environment';
     routing,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     OrderModule,
-    AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
-    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     BrowserAnimationsModule, MatDatepickerModule,
-     MatButtonModule, MatNativeDateModule, MatInputModule, MatCheckboxModule,
-     MatSelectModule //MaterializeModule
+    MatButtonModule, MatNativeDateModule, MatInputModule, MatCheckboxModule,
+    MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule,
+    MatMenuModule,MatToolbarModule,MatIconModule
   ],
   providers: [AuthService, FirebaseconnectionService],
   bootstrap: [AppComponent]

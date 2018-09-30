@@ -1,12 +1,11 @@
 import { Component, Input, NgZone, OnInit  } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';//Para trabajar con los observables desde rxjs
 import 'rxjs/add/operator/catch';//para poder tomar cosas
 import 'rxjs/add/operator/toPromise';
 
 import { Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList, AngularFireObject} from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../providers/auth.service';
 import { FirebaseconnectionService } from '../providers/firebaseconnection.service';
 import { Evento } from "../commons/evento.model";
@@ -34,7 +33,6 @@ export class AdminComponent implements OnInit  {
   numberHora: any[];
   tiposDeActividades: Observable<any[]>;
   estadoActividades: Observable<any[]>;
-  evento: AngularFireObject<any>;
   eventoObject = new Evento();
   id: any; // id recibido
   periodos: string[];
@@ -49,7 +47,7 @@ export class AdminComponent implements OnInit  {
 
   ngOnInit() {
     this.eventoObject = new Evento('', '', [false,false,false,false,false,false,false], '', '', '', '', '', '', '', '', '');
-    this.actividades = this.afService.getActividades();
+    this.actividades = this.afService.getActividadesRef(); // cambiar Ref
     this.aulas = this.afService.getAulas();
     this.estadoActividades = this.afService.getEstados();
     this.tiposDeActividades = this.afService.getTiposActividades();
@@ -64,7 +62,7 @@ export class AdminComponent implements OnInit  {
   }
 
   isUserLoggedIn() {
-   return this.authService.loggedIn;
+  // return this.authService.loggedIn;
   }
 
   getDataFormat(e: Event) {

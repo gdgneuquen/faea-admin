@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RouterModule, Router, ActivatedRoute} from '@angular/router';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import {Evento} from "../commons/evento.model";
 import { Observable } from 'rxjs/Observable';
 
@@ -12,8 +12,15 @@ export class FirebaseconnectionService {
   constructor(private af: AngularFireDatabase) { }
 
   getActividades() {
+    /*return this.af.list('/actividades',ref => ref.orderByChild('horaInicio')).snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });*/
+  }
+
+  getActividadesRef() {
     return this.af.list('/actividades').valueChanges();
   }
+  
 
   getListActividadesWithOptions(options: any): AngularFireList<any[]> {
     return this.af.list('/actividades', options);
@@ -35,9 +42,9 @@ export class FirebaseconnectionService {
     return this.af.list('/tipo').valueChanges();
   }
 
-  getActividadByKey(key: string): AngularFireObject<any> {
+ /* getActividadByKey(key: string): AngularFireObject<any> {
     return this.af.object('/actividades/' + key);
-  }
+  }*/
 
   addActividad(actividad: Evento) {
     // TODO: asume que fue validado

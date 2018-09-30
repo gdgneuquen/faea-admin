@@ -1,9 +1,6 @@
-// import { FirebaseApp } from 'angularfire2/app';
-import { any } from 'codelyzer/util/function';
 import { Component, Injectable  } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 
 @Injectable()
@@ -14,29 +11,7 @@ export class AuthService {
   constructor(public afAuth: AngularFireAuth) {
   }
 
-
-  /*constructor(private afAuth: AngularFireAuth) {
-    this.afAuth.auth.onAuthStateChanged(firebaseUser =>
-      {
-        //console.log('onAuthStateChanged');
-        //console.log('isUserLoggedIn',this.afAuth.auth.currentUser);
-        if(firebaseUser){
-          //console.log('firebaseUser',firebaseUser.providerData[0]);//solo google
-          console.log('logged in');
-          this.user = firebaseUser.providerData[0];//afAuth.authState;
-          this.loggedIn = true;
-        }else{
-          console.log('not logged in');
-          this.user = null;
-          this.loggedIn = false;
-        }
-      }
-    );
-  }*/
-
-
-
-  isUserEqual(googleUser, firebaseUser) {
+ /*isUserEqual(googleUser, firebaseUser) {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
       for (var i = 0; i < providerData.length; i++) {
@@ -48,39 +23,17 @@ export class AuthService {
       }
     }
     return false;
-  }
-  /**
-   * Logs in the user
-   * @returns {firebase.Promise<FirebaseAuthState>}
-   */
- /* loginWithGoogle2() : firebase.Promise<any> {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    //TODO: no se agrega aca vez por que lo previene desde la configuracion de firebase
-    provider.addScope('profile');
-    provider.addScope('email');
-    provider.setCustomParameters({prompt: 'select_account'});
-
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then(function(googleUser) {
-        //console.log('Google Auth Response', googleUser);
-        // This gives you a Google Access Token.
-        var token = googleUser.credential.accessToken;
-        // The signed-in user info.
-        var localuser = googleUser.user;
-        console.log('Google token', token);
-        console.log('Google user', localuser);
-        //this.user= googleUser.user.authState;
-        //TODO con el token recibido ver si hay que  mandarlo en cada peticion o si ya lo maneja firebase
-        //leer mas eso
-    }).catch(function(error) {
-      console.log(error); // "auth/internal-error"  , etc
-      // An error happened.
-      // Handle Errors here.
-    });
-
   }*/
 
   loginWithGoogle() {
+    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  }
+  logout() {
+    this.afAuth.auth.signOut();
+  }
+  
+
+  /*loginWithGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
     //TODO: no se agrega aca vez por que lo previene desde la configuracion de firebase
     provider.addScope('profile');
@@ -103,7 +56,7 @@ export class AuthService {
     // An error happened.
     // Handle Errors here.
   });
-  }
+  }*/
 
   loginWithEmail(email: string, password: string) {
     this.afAuth
@@ -126,25 +79,11 @@ export class AuthService {
     });
   }
 
-  logout() {
+  /*logout() {
     this.afAuth.auth.signOut().then(function() {
       console.log('Sign-out successful.');
     }, function(error) {
        console.log('Error Sign-out.');
     });
-  }
-
-  /*getUser() :firebase.Promise<any>{
-     if (this.afAuth.auth.currentUser != null) {
-      this.afAuth.auth.currentUser.providerData.forEach(function (profile) {
-        console.log("  Sign-in provider: "+profile.providerId);
-        console.log("  Provider-specific UID: "+profile.uid);
-        console.log("  Name: "+profile.displayName);
-        console.log("  Email: "+profile.email);
-        console.log("  Photo URL: "+profile.photoURL);
-      });
-    }
-    return this.user;
   }*/
-
 }

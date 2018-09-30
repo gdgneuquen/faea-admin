@@ -1,74 +1,71 @@
 <app-header></app-header>
 
-<div class="container-fluid" *ngIf="isUserLoggedIn() && actividades">
-    <!-- TITULOS -->
-    <div class="row">
-      <div class="col m1 center texto-titulo-tabla">
-        HORARIO
-      </div>
-      <div class="col m2 center texto-titulo-tabla">
-        ACTIVIDAD
-      </div>
-      <div class="col m1 center texto-titulo-tabla">
-        TIPO
-      </div>
+<mat-card class="example-card">
 
-      <div class="col m2 center texto-titulo-tabla">
-        PROFE/REFERENTE
-      </div>
-      <!--div class="col m1 center texto-titulo-tabla">
-        DESDE
-      </div>
-      <div class="col m1 center texto-titulo-tabla">
-        HASTA
-      </div-->
-      <div class="col m1 center texto-titulo-tabla">
-        AULA
-      </div>
-      <div class="col m1 center texto-titulo-tabla">
-        ESTADO
-      </div>
-       <div class="col m1 center texto-titulo-tabla">
-        ACCIONES
-      </div>
-    </div>
-    <!-- /TITULOS -->
+<mat-card-content>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
 
-    <!-- Una sola fila -->
-    <div class="row fila" *ngFor="let actividad of actividades | async" >
-      <div class="col m1 elemento-tabla center" >
-        {{actividad.horaInicio}} a {{actividad.horaFin}}
-      </div>
-      <div class="col m2 elemento-tabla center">
-        {{actividad.descripcion}}<!-- Cuando la materia tiene nombre largo, usar marquesina  -->
-      </div>
-      <div class="col m1 elemento-tabla green center">
-        {{actividad.tipoActividad}}
-      </div>
-      <div class="col m2 elemento-tabla">
-        {{actividad.nombre}}
-      </div>
-      <!--div class="col m1 elemento-tabla">
-           {{actividad.pickerDesde  | date: 'dd/MM/yy'}}
-      </div>
-          <div class="col m1 elemento-tabla">
-           {{actividad.pickerHasta  | date: 'dd/MM/yy'}}
-      </div-->
-      <div class="col m1 elemento-tabla">
-           {{actividad.zonaAula}}
-      </div>
-      <div class="col m1 center elemento-tabla "
-      
-      [class.green] = "actividad.estadoActividad == 'Normal'"
-      [class.yellow] = "actividad.estadoActividad == 'Se Cambio'"
-      [class.red] = "actividad.estadoActividad == 'Suspendida'">
-        {{actividad.estadoActividad}}
-      </div>
+      <!-- Periodo Column -->
+      <ng-container matColumnDef="periodo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Periodo</th>
+          <td mat-cell *matCellDef="let row">  {{row.periodo}}</td>
+      </ng-container>
+  
+      <!-- Hora Inicio Column -->
+      <ng-container matColumnDef="horainicio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora Inicio</th>
+        <td mat-cell *matCellDef="let row">  {{row.horaInicio}}</td>
+      </ng-container>
 
-      <div class="col m1 elemento-tabla center" >
-          <!--a routerLink="/detalle/{{actividad.key}}"> ... ver mas</a-->
-         <a class="iconsch edit" routerLink="/detalle/{{actividad.key}}"><i class="small material-icons">edit</i></a>
-         <a class="iconsch delete" (click)="DeleteActivity(actividad.key)"><i class="small material-icons">delete</i></a>
-      </div>
-    </div>
-</div>
+      <!-- Hora Fin Column -->
+      <ng-container matColumnDef="horafin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora Fin</th>
+        <td mat-cell *matCellDef="let row">  {{row.horaFin}}</td>
+      </ng-container>
+  
+      <!-- Actividad Column -->
+      <ng-container matColumnDef="actividad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actividad </th>
+        <td mat-cell *matCellDef="let row">  {{row.descripcion}} </td>
+      </ng-container>
+  
+      <!-- Tipo Column -->
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+        <td mat-cell *matCellDef="let row">  {{row.tipoActividad}} </td>
+      </ng-container>
+  
+      <!-- Profe Column -->
+      <ng-container matColumnDef="profe">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Profe/Referente </th>
+        <td mat-cell *matCellDef="let row">  {{row.nombre}} </td>
+      </ng-container>
+  
+      <!-- Aula Column -->
+      <ng-container matColumnDef="aula">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Aula </th>
+        <td mat-cell *matCellDef="let row"> {{row.zonaAula}} </td>
+      </ng-container>
+  
+  
+      <!-- Estado Column -->
+      <!--ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let row">  {{row.estadoActividad}} </td>
+      </ng-container-->
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[25, 50, 100, 150]"></mat-paginator>
+  </div>
+  
+</mat-card-content>
+</mat-card>
+
+
