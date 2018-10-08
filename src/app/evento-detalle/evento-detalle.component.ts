@@ -6,9 +6,10 @@
 
   import * as moment from 'moment';
 
-  import { FirebaseconnectionService } from '../providers/firebaseconnection.service';
-  import { AuthService } from '../providers/auth.service';
-  import {Evento} from "../commons/evento.model";
+  import { FirebaseconnectionService } from '../service/firebaseconnection.service';
+  import { EventoService } from '../service/evento.service';
+  import { AuthService } from '../service/auth.service';
+  import { Evento } from "../model/evento.model";
   
   //Material
   import { MatDatepickerModule, DateAdapter } from '@angular/material';
@@ -38,6 +39,7 @@
     constructor(
       private authService: AuthService,
       private afService: FirebaseconnectionService,
+      private eventoService: EventoService,
       private router: Router,
       private route: ActivatedRoute,
       private dateAdapter: DateAdapter<Date>) { 
@@ -50,7 +52,7 @@
           
       this.aulas = this.afService.getAulas();
       this.estadoActividades = this.afService.getEstados();
-      this.tiposDeActividades = this.afService.getTiposActividades();
+      //this.tiposDeActividades = this.afService.getTiposActividades();
       this.numberHora = this.afService.getHorarios();
       this.periodos = this.afService.getPeriodos();
       this.dateAdapter.setLocale('es-ar');
@@ -74,7 +76,7 @@
       }
       eventoSend.pickerDesde = moment(eventoSend.pickerDesde).locale('es').format('YYYY-MM-DD');
       eventoSend.pickerHasta = moment(eventoSend.pickerHasta).locale('es').format('YYYY-MM-DD'),
-      this.afService.updateActividadByKey(this.id, eventoSend);
+      this.eventoService.updateActividadByKey(this.id, eventoSend);
       this.cancel();
     }
     

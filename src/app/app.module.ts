@@ -6,15 +6,15 @@ import { routing } from './app-router.module';
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { PizarraComponent } from './pizarra/pizarra.component';
 import { EventoComponent } from './evento/evento.component';
-import { AdminComponent } from './admin/admin.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
-import { MainComponent } from './main/main.component';
+import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { EventoDetalle } from './evento-detalle/evento-detalle.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { AuthService } from './providers/auth.service';
-import { FirebaseconnectionService } from './providers/firebaseconnection.service';
+import { AuthService } from './service/auth.service';
+import { FirebaseconnectionService } from './service/firebaseconnection.service';
 import { PageNotFoundComponent} from './notfound/page.not.found.component';
 import { OrderModule } from 'ngx-order-pipe';
 
@@ -27,17 +27,17 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 //Material
 import { MatDatepickerModule, MatNativeDateModule , MatCheckboxModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule,MatMenuModule,MatToolbarModule,MatIconModule} from '@angular/material';
+import {MatButtonModule,MatMenuModule,MatToolbarModule,MatIconModule,MatGridListModule,} from '@angular/material';
 import {MatInputModule, MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule} from '@angular/material';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PizarraComponent,
     EventoComponent,
-    AdminComponent,
     NotificacionesComponent,
-    MainComponent,//Pag. inicial admin, puede modificar items en pantalla
+    HomeComponent,
     HeaderComponent,
     EventoDetalle,
     PageNotFoundComponent,
@@ -56,7 +56,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule, MatDatepickerModule,
     MatButtonModule, MatNativeDateModule, MatInputModule, MatCheckboxModule,
     MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule,
-    MatMenuModule,MatToolbarModule,MatIconModule
+    MatMenuModule,MatToolbarModule,MatIconModule,MatGridListModule,
   ],
   providers: [AuthService, FirebaseconnectionService],
   bootstrap: [AppComponent]

@@ -1,109 +1,104 @@
- 
-import { Component, NgZone, OnInit, ɵConsole } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, Input, NgZone, OnInit  } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { Subscription} from 'rxjs';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import 'rxjs/add/observable/throw';//Para trabajar con los observables desde rxjs
+import 'rxjs/add/operator/catch';//para poder tomar cosas
+import 'rxjs/add/operator/toPromise';
 
 import { Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { AuthService } from '../providers/auth.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AuthService } from '../service/auth.service';
+import { EventoService } from '../service/evento.service';
+import { FirebaseconnectionService } from '../service/firebaseconnection.service';
+import { Evento } from "../model/evento.model";
 
-import * as firebase from 'firebase/app';
 import * as moment from 'moment';
-import {FirebaseconnectionService} from "../providers/firebaseconnection.service";
-import {Evento, IEvento} from "../commons/evento.model";
-import {serialize} from "@angular/compiler/src/i18n/serializers/xml_helper";
-import {ArrayObservable} from "rxjs/observable/ArrayObservable";
 
 @Component({
   selector: 'app-evento',
   templateUrl: './evento.component.html',
   styleUrls: ['./evento.component.css']
 })
-export class EventoComponent implements OnInit {
 
-  private subscription : Subscription;
+export class EventoComponent implements OnInit  {
 
-  //Relacionado al plugin momentjs:
-  horaActual = moment().locale('es').format('LT');
-  hoy = moment().locale('es').format('LLLL');//fecha
-  dia = moment().locale('es').format('dddd');//dia de la semana
-  diezminutos=600000;//en ms
-  //Relacionado al plugin ngx-order-pipe. Hay que agregarlo a imports en app.module.ts
-  order = "actividad.pickerDesde";
-  reverse = true;
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2020, 0, 1);
+  hoy = moment().locale('es').format('DD/M/YYYY');
 
-  actividades : any = new Array;
-
-  //actividades es tipo any para poder recibir todo lo que le trae el servicio
+  actividades: Observable<any[]>;
+  numberHora: any[];
+  tiposDeActividades: Observable<any[]>;
+  estadoActividades: Observable<any[]>;
+  id: any; // id recibido
+  periodos: string[];
+  aulas: Observable<any[]>;
+  msgVal: string = ''; //mensaje de entrada del form
 
   constructor(
     private authService: AuthService,
+    private eventoService: EventoService,
     private afService: FirebaseconnectionService,
-    private router: Router) {}
+    private router: Router,
+   // private dateAdapter: DateAdapter<Date>
+    ) { }
 
   ngOnInit() {
-    let timer = TimerObservable.create(this.diezminutos, this.diezminutos);
-    this.subscription=timer.subscribe(t=>{
-      this.getActividades();  
-    })
-    this.getActividades();
+    this.eventoService.getEventos();
+   // this.aulas = this.afService.getAulas();
+   // this.estadoActividades = this.afService.getEstados();
+   // this.tiposDeActividades = this.eventoService.getTiposActividades();
+  //  this.numberHora = this.afService.getHorarios();
+    //this.periodos = this.afService.getPeriodos();
+   // this.dateAdapter.setLocale('es-ar');
+
   }
 
   isUserLoggedIn() {
-     return this.authService.loggedIn;
-   }
-
-  getActividades() {
-  /*  this.afService.getActividades().subscribe(actividades => {
-        this.actividades = [], // reset por la subscripcion
-        actividades.forEach(actividad => this.filterCurrentActivity(actividad))
-    })*/
+  // return this.authService.loggedIn;
   }
-  
-  // filtrar actividad de esta semana y de hoy
-  // controlar que sea valido, que este dentro de la semana vigente, que sea dia actual
-  // que no vencio (en horas) y que este en el array de dias seleccionados
-  filterCurrentActivity(actividad: Evento) {
-    // evento que esta en la semana actual, y que sea hoy
-    if ( this.belongsToPeriodo(actividad) //&& this.belongsToToday(actividad)
-        &&  this.isEventValid(actividad)) {
 
-          var actividad2 = {
-            horario: actividad.horaInicio + ' a ' + actividad.horaFin,
-            actividad: actividad.descripcion,
-            tipo: actividad.tipoActividad,
-            profesor: actividad.nombre,
-            aula: actividad.zonaAula,
-            estado: actividad.estadoActividad,
-          }
-         // console.log(actividad2);
-        this.actividades.push(actividad2);
+ /* SendEvento(eventoSend: Evento) {
+    // TODO: hacer contrl de error y validaciones
+    if ( eventoSend.horaInicio === "" || eventoSend.horaFin === "" ||
+        eventoSend.descripcion === "" || eventoSend.nombre === "" ||
+        eventoSend.tipoActividad === "" || eventoSend.zonaAula === "") {
+      alert("Por favor complete todos los campos obligatorios");
+      return false;
     }
-  }
-  //que la fecha de hoy este entre la fecha y hora disponible del la actividad
-  belongsToPeriodo(actividad: Evento) {
-    return moment().isBetween(moment(actividad.pickerDesde, moment.ISO_8601), moment(actividad.pickerHasta, moment.ISO_8601));
+    eventoSend.pickerDesde = moment(eventoSend.pickerDesde).locale('es').format('YYYY-MM-DD');
+    eventoSend.pickerHasta = moment(eventoSend.pickerHasta).locale('es').format('YYYY-MM-DD');
+    // check undefined && false
+    let dias = [(eventoSend.chk_lun == true),
+      (eventoSend.chk_ma == true),
+        (eventoSend.chk_mi == true),
+          (eventoSend.chk_ju == true),
+            (eventoSend.chk_vi == true),
+              (eventoSend.chk_sa == true),
+                (eventoSend.chk_do == true)];//creo el arreglo de días
+    eventoSend.dias = dias;
+  //  this.eventoService.addActividad(eventoSend);
+    this.goToMain();
+  }*/
+
+  goToMain() {
+    this.router.navigate(['/main']);
   }
 
-  belongsToToday(actividad: Evento) {
-    const currentFromDayFrom = moment(actividad.pickerDesde).locale('es');
-    const currentFromDayTo = moment(actividad.pickerHasta).locale('es');
-    return moment().locale('es').diff(currentFromDayFrom, 'days') === 0 || moment().locale('es').diff(currentFromDayTo, 'days') === 0;
+
+  onClear() {
+    this.eventoService.form.reset();
+    this.eventoService.initializeFormGroup();
+    
   }
 
-  // Controlar el dia seleccionado en array y la hora vencida
-  isEventValid(actividad: Evento) {
-    return (actividad.dias[moment().locale('es').weekday()]
-    && moment().locale('es').format('HH:mm') <= actividad.horaFin);
-  }
-
-  // esta funcion estaba pensada paracambiar el fondo por uno mas llamativo de la actividad en curso.
-  estaEnCurso(actividad: Evento) {
-    // TODO: implementar funcion.
+  onSubmit() {
+    if (this.eventoService.form.valid) {
+      this.eventoService.insertEvento(this.eventoService.form.value);
+      this.eventoService.form.reset();
+      this.eventoService.initializeFormGroup();
+      console.log("Submitted successfully");
+     // this.notificationService.success(':: Submitted successfully');
+    }
   }
 
 }
- 

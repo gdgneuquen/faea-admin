@@ -1,60 +1,46 @@
-
-<nav class="nav-extended yellow accent-4"><!-- valores anteriores black -->
-  <div class="nav-wrapper">
-    <div class="brand-logo"><img src="./assets/logo-faea.png"></div>
-    
-
-    
-    <a routerLink="" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <div class="right indigo-text" id="hoyuppercase"> {{hoy |uppercase}}</div>    
-    <ul class="side-nav" id="mobile-demo">
-      <li><a routerLink=""><i class="material-icons">Inicio</i></a></li>
-    </ul>
-  </div>
-</nav>
-
-
-<div class="container-fluid" >
-
-    <table class="striped centered" [class.responsive-table]="tablaResponsiva">
-  <thead>
-    <tr class="texto-titulo-tabla">
-      <th>HORARIO</th>
-      <th>ACTIVIDAD</th>
-      <th>TIPO</th>
-      <th>PROFESOR</th>
-      <th>AULA</th>
-      <th>ESTADO</th>
-    </tr>
-    <tr><th colspan="6"><marquee bgcolor="#FFFFFF" width="50%" scrolldelay="100" scrollamount="5" direction="left" loop="infinite">Bienvenidos a FAEA Eventos!</marquee></th></tr>
-   
-  </thead>
-  
-  <tbody>
-     
-     <tr  *ngFor="let actividad of actividades ">
-      <!-- Tratando de definir un observable que cambie el fondo de la fila que este cursando ahora mismo.   -->
-      <td>{{actividad.horario}}</td>
-      <td> {{actividad.actividad}}</td>
-      <td class="green">
-       {{actividad.tipo}}
-      </td>
-      <td>
-       {{actividad.profesor}}
-      </td>
-      <td>{{actividad.aula}}</td>
-      <td>
-        <div class="estado elemento-tabla"
-        [class.green] = "actividad.estado == 'Normal'"
-        [class.yellow] = "actividad.estado == 'Se Cambio'"
-        [class.red] = "actividad.estado == 'Suspendida'">
-         {{actividad.estado}}
+<!--app-header></app-header-->
+<form [formGroup]="eventoService.form" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="$key">
+        <mat-form-field>
+          <input formControlName="nombre" matInput placeholder="Nombre Evento*">
+          <mat-error>Este Campo es obligatorio.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="referente" matInput placeholder="Referente/Profesor*">
+          <mat-error>Este Campo es obligatorio.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="aula" matInput placeholder="Seleccione Aula*">
+          <mat-error>Este Campo es obligatorio.</mat-error>
+        </mat-form-field>
+        
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+      
+        <!--mat-form-field>
+          <mat-select formControlName="department" placeholder="Department">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let department of departmentService.array">
+              <mat-option value="{{department.$key}}">{{department.code}}-{{department.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field-->
+        <!--mat-form-field>
+          <input formControlName="hireDate" matInput [matDatepicker]="picker" placeholder="Hire Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field-->
+        
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="eventoService.form.invalid">Enviar</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Limpiar</button>
         </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-</div>
-
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

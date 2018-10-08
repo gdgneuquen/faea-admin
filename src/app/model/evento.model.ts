@@ -1,4 +1,3 @@
-
 export interface IEvento {
   key?: string;
   descripcion?: string;
@@ -14,7 +13,6 @@ export interface IEvento {
   periodo?: string;
 }
 
-//export class Evento implements IEvento {
   export class Evento {
   key?: string;
   public dias: any[];

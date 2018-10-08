@@ -1,8 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { FirebaseconnectionService } from '../providers/firebaseconnection.service';
-import { AuthService } from '../providers/auth.service';
+import { EventoService } from '../service/evento.service';
+import { AuthService } from '../service/auth.service';
 import * as moment from 'moment';
 
 export interface Evento {
@@ -21,11 +21,11 @@ export interface Evento {
 }
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class MainComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   hoy = moment().locale('es').format('LLLL');
   actividades: Observable<Evento[]>;
@@ -40,7 +40,7 @@ export class MainComponent implements OnInit {
 
   constructor(
       private authService: AuthService,
-      public af: FirebaseconnectionService
+      public af: EventoService
   ){}
 
   ngOnInit(){
