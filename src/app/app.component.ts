@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import 'hammerjs';
-
-
 
 @Component({
   selector: 'app-root',
@@ -10,6 +7,4 @@ import 'hammerjs';
 })
 export class AppComponent {
   title = 'app';
-
-
 }
