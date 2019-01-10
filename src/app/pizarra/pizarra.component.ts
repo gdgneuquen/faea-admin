@@ -5,11 +5,11 @@ import { Subscription} from 'rxjs';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 import { Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../model/auth.service';
 
 import * as moment from 'moment';
-import {FirebaseconnectionService} from "../service/firebaseconnection.service";
-import {Evento} from "../model/evento.model";
+import { FirebaseconnectionService } from "../model/firebaseconnection.service";
+import { Actividad } from "../model/actividad.model";
 
 
 @Component({
@@ -61,7 +61,7 @@ export class PizarraComponent implements OnInit {
   // filtrar actividad de esta semana y de hoy
   // controlar que sea valido, que este dentro de la semana vigente, que sea dia actual
   // que no vencio (en horas) y que este en el array de dias seleccionados
-  filterCurrentActivity(actividad: Evento) {
+  filterCurrentActivity(actividad: Actividad) {
     // evento que esta en la semana actual, y que sea hoy
     if ( this.belongsToPeriodo(actividad) //&& this.belongsToToday(actividad)
         &&  this.isEventValid(actividad)) {
@@ -79,24 +79,24 @@ export class PizarraComponent implements OnInit {
     }
   }
   //que la fecha de hoy este entre la fecha y hora disponible del la actividad
-  belongsToPeriodo(actividad: Evento) {
+  belongsToPeriodo(actividad: Actividad) {
     return moment().isBetween(moment(actividad.pickerDesde, moment.ISO_8601), moment(actividad.pickerHasta, moment.ISO_8601));
   }
 
-  belongsToToday(actividad: Evento) {
+  belongsToToday(actividad: Actividad) {
     const currentFromDayFrom = moment(actividad.pickerDesde).locale('es');
     const currentFromDayTo = moment(actividad.pickerHasta).locale('es');
     return moment().locale('es').diff(currentFromDayFrom, 'days') === 0 || moment().locale('es').diff(currentFromDayTo, 'days') === 0;
   }
 
   // Controlar el dia seleccionado en array y la hora vencida
-  isEventValid(actividad: Evento) {
+  isEventValid(actividad: Actividad) {
     return (actividad.dias[moment().locale('es').weekday()]
     && moment().locale('es').format('HH:mm') <= actividad.horaFin);
   }
 
   // esta funcion estaba pensada paracambiar el fondo por uno mas llamativo de la actividad en curso.
-  estaEnCurso(actividad: Evento) {
+  estaEnCurso(actividad: Actividad) {
     // TODO: implementar funcion.
   }
 

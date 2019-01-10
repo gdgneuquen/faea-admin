@@ -1,8 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { EventoService } from '../service/evento.service';
-import { AuthService } from '../service/auth.service';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ActividadService } from '../model/actividad.service';
+import { AuthService } from '../model/auth.service';
 import * as moment from 'moment';
 
 export interface Evento {
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
       private authService: AuthService,
-      public af: EventoService
+      public af: ActividadService
   ){}
 
   ngOnInit(){

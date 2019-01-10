@@ -6,10 +6,10 @@
 
   import * as moment from 'moment';
 
-  import { FirebaseconnectionService } from '../service/firebaseconnection.service';
-  import { EventoService } from '../service/evento.service';
-  import { AuthService } from '../service/auth.service';
-  import { Evento } from "../model/evento.model";
+  import { FirebaseconnectionService } from '../model/firebaseconnection.service';
+  import { ActividadService } from '../model/actividad.service';
+  import { AuthService } from '../model/auth.service';
+  import { Actividad } from "../model/actividad.model";
   
   //Material
   import { MatDatepickerModule, DateAdapter } from '@angular/material';
@@ -30,7 +30,7 @@
     // moment().locale('es').format('YYYY-MM-DD'); //formato firebase
     id: any; // id recibido
     //evento: Observable<any>;
-    evento: Evento;
+    evento: Actividad;
     tiposDeActividades: Observable<any[]>;
     estadoActividades: Observable<any[]>;
     periodos: string[];
@@ -39,7 +39,7 @@
     constructor(
       private authService: AuthService,
       private afService: FirebaseconnectionService,
-      private eventoService: EventoService,
+      private eventoService: ActividadService,
       private router: Router,
       private route: ActivatedRoute,
       private dateAdapter: DateAdapter<Date>) { 
@@ -50,7 +50,7 @@
        this.evento=action.payload.val();
       });*/
           
-      this.aulas = this.afService.getAulas();
+      //this.aulas = this.afService.getAulas();
       this.estadoActividades = this.afService.getEstados();
       //this.tiposDeActividades = this.afService.getTiposActividades();
       this.numberHora = this.afService.getHorarios();
@@ -66,17 +66,17 @@
        return this.authService.loggedIn;
     }
 
-    update(eventoSend: Evento) {
+    update(actividadSend: Actividad) {
       // TODO: hacer contrl de error y validaciones
-      if ( eventoSend.horaInicio === "" || eventoSend.horaFin === "" ||
-          eventoSend.descripcion === "" || eventoSend.nombre === "" ||
-          eventoSend.tipoActividad === "" || eventoSend.zonaAula === "") {
+      if ( actividadSend.horaInicio === "" || actividadSend.horaFin === "" ||
+          actividadSend.descripcion === "" || actividadSend.nombre === "" ||
+          actividadSend.tipoActividad === "" || actividadSend.zonaAula === "") {
         alert("Por favor complete todos los campos obligatorios");
         return false;
       }
-      eventoSend.pickerDesde = moment(eventoSend.pickerDesde).locale('es').format('YYYY-MM-DD');
-      eventoSend.pickerHasta = moment(eventoSend.pickerHasta).locale('es').format('YYYY-MM-DD'),
-      this.eventoService.updateActividadByKey(this.id, eventoSend);
+      actividadSend.pickerDesde = moment(actividadSend.pickerDesde).locale('es').format('YYYY-MM-DD');
+      actividadSend.pickerHasta = moment(actividadSend.pickerHasta).locale('es').format('YYYY-MM-DD'),
+      this.eventoService.updateActividadByKey(this.id, actividadSend);
       this.cancel();
     }
     

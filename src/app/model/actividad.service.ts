@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import {Evento} from "../model/evento.model";
+import { Actividad } from "../model/actividad.model";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventoService {
+export class ActividadService {
 
   constructor(private af: AngularFireDatabase) { }
 
@@ -17,12 +17,13 @@ export class EventoService {
     nombre: new FormControl('', Validators.required),
     referente: new FormControl('', Validators.required), // nombre prof/ref
     aula: new FormControl('', Validators.required),
-    tipoActividad: new FormControl('', Validators.required),
+    tipo: new FormControl('', Validators.required),
     horaInicio: new FormControl('', Validators.required),
     horaFin: new FormControl('', Validators.required),
-    pickerDesde: new FormControl('', Validators.required),
-    pickerHasta: new FormControl('', Validators.required),
-    estadoActividad: new FormControl('', Validators.required),
+    fechaDesde: new FormControl('', Validators.required),
+    fechaHasta: new FormControl('', Validators.required),
+    estado: new FormControl(''),
+    dias: new FormControl(''),
   });
 
   initializeFormGroup() {
@@ -32,11 +33,11 @@ export class EventoService {
       referente: '',
       horaInicio: '',
       horaFin: '',
-      pickerDesde: '',
-      pickerHasta: '',
+      fechaDesde: '',
+      fechaHasta: '',
       aula: '',
-      estadoActividad: '',
-      tipoActividad: '',
+      estado: '',
+      tipo: '',
     });
   }
 
@@ -58,10 +59,6 @@ export class EventoService {
     return this.af.list('/actividades', options);
   }
 
-  getTiposActividades() {
-    return this.af.list('/tipo').valueChanges();
-  }
-
  /* getActividadByKey(key: string): AngularFireObject<any> {
     return this.af.object('/actividades/' + key);
   }*/
@@ -73,20 +70,20 @@ export class EventoService {
       {
         descripcion: evento.nombre,
         dias: evento.dias,
-        estadoActividad: evento.estadoActividad,
+        estadoActividad: evento.estado,
         horaFin: evento.horaFin,
         horaInicio: evento.horaInicio,
         nombre: evento.referente,
         periodo: evento.periodo,
-        pickerDesde: evento.pickerDesde,
-        pickerHasta: evento.pickerHasta,
-        tipoActividad: evento.tipoActividad,
+        pickerDesde: evento.fechaDesde,
+        pickerHasta: evento.fechaHasta,
+        tipoActividad: evento.tipo,
         zonaAula: evento.aula,
       }
     );
   }
 
-  updateActividadByKey(key: string, actividad: Evento) {
+  updateActividadByKey(key: string, actividad: Actividad) {
     // no actualizaba
    // actividad.dias = [actividad.chk_lun, actividad.chk_ma, actividad.chk_mi, actividad.chk_ju, actividad.chk_vi, actividad.chk_sa, actividad.chk_do];
     console.log(actividad);

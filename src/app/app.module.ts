@@ -13,16 +13,20 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { EventoDetalle } from './evento-detalle/evento-detalle.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { AuthService } from './service/auth.service';
-import { FirebaseconnectionService } from './service/firebaseconnection.service';
 import { PageNotFoundComponent} from './notfound/page.not.found.component';
 import { OrderModule } from 'ngx-order-pipe';
+
+//Servicios
+import { AuthService } from './model/auth.service';
+import { FirebaseconnectionService } from './model/firebaseconnection.service';
+
+//Shared
+import { MaterialModule } from './shared/material.module';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-
 
 //Material
 import { MatDatepickerModule, MatNativeDateModule , MatCheckboxModule} from '@angular/material';
@@ -53,10 +57,8 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    BrowserAnimationsModule, MatDatepickerModule,
-    MatButtonModule, MatNativeDateModule, MatInputModule, MatCheckboxModule,
-    MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule,
-    MatMenuModule,MatToolbarModule,MatIconModule,MatGridListModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [AuthService, FirebaseconnectionService],
   bootstrap: [AppComponent]

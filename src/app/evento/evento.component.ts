@@ -6,10 +6,10 @@ import 'rxjs/add/operator/toPromise';
 
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { AuthService } from '../service/auth.service';
-import { EventoService } from '../service/evento.service';
-import { FirebaseconnectionService } from '../service/firebaseconnection.service';
-import { Evento } from "../model/evento.model";
+import { AuthService } from '../model/auth.service';
+import { ActividadService } from '../model/actividad.service';
+import { FirebaseconnectionService } from '../model/firebaseconnection.service';
+import { Actividad } from "../model/actividad.model";
 
 import * as moment from 'moment';
 
@@ -27,7 +27,7 @@ export class EventoComponent implements OnInit  {
 
   actividades: Observable<any[]>;
   numberHora: any[];
-  tiposDeActividades: Observable<any[]>;
+  tipos: Observable<any[]>;
   estadoActividades: Observable<any[]>;
   id: any; // id recibido
   periodos: string[];
@@ -36,7 +36,7 @@ export class EventoComponent implements OnInit  {
 
   constructor(
     private authService: AuthService,
-    private eventoService: EventoService,
+    private eventoService: ActividadService,
     private afService: FirebaseconnectionService,
     private router: Router,
    // private dateAdapter: DateAdapter<Date>
@@ -46,8 +46,8 @@ export class EventoComponent implements OnInit  {
     this.eventoService.getEventos();
    // this.aulas = this.afService.getAulas();
    // this.estadoActividades = this.afService.getEstados();
-   // this.tiposDeActividades = this.eventoService.getTiposActividades();
-  //  this.numberHora = this.afService.getHorarios();
+   // this.tipos = this.afService.getTiposActividades();
+    this.numberHora = this.afService.getHorarios();
     //this.periodos = this.afService.getPeriodos();
    // this.dateAdapter.setLocale('es-ar');
 

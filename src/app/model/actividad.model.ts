@@ -1,4 +1,4 @@
-export interface IEvento {
+export interface IActividad {
   key?: string;
   descripcion?: string;
   dias?: any[];
@@ -13,7 +13,7 @@ export interface IEvento {
   periodo?: string;
 }
 
-  export class Evento {
+  export class Actividad {
   key?: string;
   public dias: any[];
   public chk_lun: boolean = false;

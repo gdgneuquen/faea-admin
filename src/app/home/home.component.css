@@ -7,6 +7,10 @@ table {
   width: 100%;
 }
 
-td, th {
-  width: 25%;
+.mat-header-cell {
+  font-size: 16px;
 }
+
+/*td, th {
+  width: 25%;
+}*/

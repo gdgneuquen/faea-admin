@@ -1,7 +1,7 @@
 //import { Observable } from 'angular2-material-datepicker/node_modules/rxjs/Rx';
 //import { MaterializeAction } from 'angular2-materialize/dist';
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../model/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

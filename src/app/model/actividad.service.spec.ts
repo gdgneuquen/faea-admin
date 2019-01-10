@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EventoService } from './evento.service';
+import { ActividadService } from './actividad.service';
 
-describe('EventoService', () => {
+describe('ActividadService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: EventoService = TestBed.get(EventoService);
+    const service: ActividadService = TestBed.get(ActividadService);
     expect(service).toBeTruthy();
   });
 });

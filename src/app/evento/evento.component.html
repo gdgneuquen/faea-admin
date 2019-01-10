@@ -12,29 +12,77 @@
           <input formControlName="referente" matInput placeholder="Referente/Profesor*">
           <mat-error>Este Campo es obligatorio.</mat-error>
         </mat-form-field>
+
         <mat-form-field>
+            <mat-select formControlName="aula" placeholder="Seleccione Aula*">
+              <ng-container *ngFor="let aula of afService.aulasArray">
+                <mat-option value="aula.nombre">{{aula.nombre}}</mat-option>
+              </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <!--mat-form-field>
           <input formControlName="aula" matInput placeholder="Seleccione Aula*">
           <mat-error>Este Campo es obligatorio.</mat-error>
+        </mat-form-field-->
+
+        <mat-form-field>
+            <mat-select formControlName="tipo" placeholder="Seleccione Tipo*">
+              <ng-container *ngFor="let tipo of afService.tiposArray">
+                <mat-option value="tipo.nombre">{{tipo.nombre}}</mat-option>
+              </ng-container>
+            </mat-select>
         </mat-form-field>
+
+        <!--mat-form-field>
+          <input formControlName="tipo" matInput placeholder="Seleccione Tipo*">
+          <mat-error>Este Campo es obligatorio.</mat-error>
+        </mat-form-field-->
         
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="controles-container">
-      
-        <!--mat-form-field>
-          <mat-select formControlName="department" placeholder="Department">
-            <mat-option>None</mat-option>
-            <ng-container *ngFor="let department of departmentService.array">
-              <mat-option value="{{department.$key}}">{{department.code}}-{{department.name}}</mat-option>
-            </ng-container>
-          </mat-select>
-        </mat-form-field-->
-        <!--mat-form-field>
-          <input formControlName="hireDate" matInput [matDatepicker]="picker" placeholder="Hire Date">
+        <mat-form-field>
+          <input formControlName="fechaDesde" matInput [matDatepicker]="picker" placeholder="Fecha Desde">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field-->
+        </mat-form-field>
+
+        <mat-form-field>
+            <input formControlName="fechaHasta" matInput [matDatepicker]="picker2" placeholder="Fecha Hasta">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+      
+        <mat-form-field>
+          <mat-select formControlName="horaInicio" placeholder="Hora Inicio">
+            <ng-container *ngFor="let hora of numberHora">
+                <mat-option value="hora">{{hora}}</mat-option>
+              </ng-container>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select formControlName="horaFin" placeholder="Hora Fin">
+              <ng-container *ngFor="let hora of numberHora">
+                <mat-option value="hora">{{hora}}</mat-option>
+              </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+        <section >
+            <mat-checkbox [checked]="eventoObject.chk_lun" [(ngModel)]="eventoObject.chk_lun">Lunes</mat-checkbox>
+            <mat-checkbox [checked]="eventoObject.chk_ma"  [(ngModel)]="eventoObject.chk_ma">Martes</mat-checkbox>
+            <mat-checkbox [checked]="eventoObject.chk_mi"  [(ngModel)]="eventoObject.chk_mi">Miercoles</mat-checkbox>
+            <mat-checkbox [checked]="eventoObject.chk_ju"  [(ngModel)]="eventoObject.chk_ju">Jueves</mat-checkbox>
+            <mat-checkbox [checked]="eventoObject.chk_vi"  [(ngModel)]="eventoObject.chk_vi">Viernes</mat-checkbox>
+            <mat-checkbox [checked]="eventoObject.chk_sa"  [(ngModel)]="eventoObject.chk_sa">Sabado</mat-checkbox>
+            <mat-checkbox [checked]="eventoObject.chk_do"  [(ngModel)]="eventoObject.chk_do">Domingo</mat-checkbox>
+          </section>
+        </mat-form-field>
+        
         
         <div class="button-row">
           <button mat-raised-button color="primary" type="submit" [disabled]="eventoService.form.invalid">Enviar</button>
