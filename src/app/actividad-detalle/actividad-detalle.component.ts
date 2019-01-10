@@ -16,12 +16,12 @@
   import { MatDatepicker } from '@angular/material';
 
   @Component({
-    selector: 'app-evento-detalle',
-    templateUrl: './evento-detalle.component.html',
-    styleUrls: ['./evento-detalle.component.css']
+    selector: 'app-actividad-detalle',
+    templateUrl: './actividad-detalle.component.html',
+    styleUrls: ['./actividad-detalle.component.css']
   })
 
-  export class EventoDetalle implements OnInit {
+  export class ActividadDetalle implements OnInit {
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
     hoy = moment().locale('es').format('LLLL');
@@ -29,8 +29,8 @@
     // moment().locale('es').format('L');
     // moment().locale('es').format('YYYY-MM-DD'); //formato firebase
     id: any; // id recibido
-    //evento: Observable<any>;
-    evento: Actividad;
+    //actividad: Observable<any>;
+    actividad: Actividad;
     tiposDeActividades: Observable<any[]>;
     estadoActividades: Observable<any[]>;
     periodos: string[];
@@ -39,7 +39,7 @@
     constructor(
       private authService: AuthService,
       private afService: FirebaseconnectionService,
-      private eventoService: ActividadService,
+      private actividadService: ActividadService,
       private router: Router,
       private route: ActivatedRoute,
       private dateAdapter: DateAdapter<Date>) { 
@@ -47,7 +47,7 @@
       this.id = this.route.snapshot.params['id'];
     /*  this.afService.getActividadByKey(this.id) 
       .snapshotChanges().subscribe(action => {
-       this.evento=action.payload.val();
+       this.actividad=action.payload.val();
       });*/
           
       //this.aulas = this.afService.getAulas();
@@ -76,7 +76,7 @@
       }
       actividadSend.pickerDesde = moment(actividadSend.pickerDesde).locale('es').format('YYYY-MM-DD');
       actividadSend.pickerHasta = moment(actividadSend.pickerHasta).locale('es').format('YYYY-MM-DD'),
-      this.eventoService.updateActividadByKey(this.id, actividadSend);
+      this.actividadService.updateActividadByKey(this.id, actividadSend);
       this.cancel();
     }
     

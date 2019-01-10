@@ -3,7 +3,7 @@
 
 <div class="container" [hidden]="!isUserLoggedIn()">
     <!-- <div class="row">
-      <pre>{{(eventoObject | json)  }}</pre>
+      <pre>{{(actividadObject | json)  }}</pre>
     </div> -->
   <div class="row">
     <div class="col s12 m6 l3">
@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col s12 m6 l3">
         <mat-select   id="horaInicio"
-                [(ngModel)]="eventoObject.horaInicio"
+                [(ngModel)]="actividadObject.horaInicio"
                 placeholder="Seleccione..."
                 floatPlaceholder="never">
           <mat-option [value]="number" *ngFor="let number of numberHora" >{{ number }}
@@ -33,7 +33,7 @@
     </div>
     <div class="col s12 m6 l3">
         <mat-select id="horaFin"
-                [(ngModel)]="eventoObject.horaFin"
+                [(ngModel)]="actividadObject.horaFin"
                 placeholder="Seleccione..."
                 floatPlaceholder="never">
           <mat-option [value]="number" *ngFor="let number of numberHora" >{{ number }}</mat-option>
@@ -43,7 +43,7 @@
                 <input matInput [matDatepicker]="pickerDesde"
                         style="width: 120px;" name="pickerDesde" id="pickerDesde"
                         [min]="minDate" [max]="maxDate"
-                        [(ngModel)]="eventoObject.pickerDesde"
+                        [(ngModel)]="actividadObject.pickerDesde"
                         placeholder="Seleccione..." floatPlaceholder="never"
                         floatPlaceholder="never">
                         <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
@@ -54,7 +54,7 @@
                 <input matInput [matDatepicker]="pickerHasta"
                         style="width: 120px;" name="pickerHasta" id="pickerHasta"
                         [min]="minDate" [max]="maxDate"
-                        [(ngModel)]="eventoObject.pickerHasta"
+                        [(ngModel)]="actividadObject.pickerHasta"
                         placeholder="Seleccione..."
                         floatPlaceholder="never">
                         <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
@@ -70,13 +70,13 @@
   <div class="row">
     <div class="col s12 m12 l12">
         <section >
-          <mat-checkbox [checked]="eventoObject.chk_lun" [(ngModel)]="eventoObject.chk_lun">Lunes</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_ma"  [(ngModel)]="eventoObject.chk_ma">Martes</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_mi"  [(ngModel)]="eventoObject.chk_mi">Miercoles</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_ju"  [(ngModel)]="eventoObject.chk_ju">Jueves</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_vi"  [(ngModel)]="eventoObject.chk_vi">Viernes</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_sa"  [(ngModel)]="eventoObject.chk_sa">Sabado</mat-checkbox>
-          <mat-checkbox [checked]="eventoObject.chk_do"  [(ngModel)]="eventoObject.chk_do">Domingo</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_lun" [(ngModel)]="actividadObject.chk_lun">Lunes</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_ma"  [(ngModel)]="actividadObject.chk_ma">Martes</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_mi"  [(ngModel)]="actividadObject.chk_mi">Miercoles</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_ju"  [(ngModel)]="actividadObject.chk_ju">Jueves</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_vi"  [(ngModel)]="actividadObject.chk_vi">Viernes</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_sa"  [(ngModel)]="actividadObject.chk_sa">Sabado</mat-checkbox>
+          <mat-checkbox [checked]="actividadObject.chk_do"  [(ngModel)]="actividadObject.chk_do">Domingo</mat-checkbox>
         </section>
     </div>
     </div>
@@ -98,7 +98,7 @@
 
      <div class="col s12 m6 l3">
         <mat-select id="periodos"
-                [(ngModel)]="eventoObject.periodo"
+                [(ngModel)]="actividadObject.periodo"
                 placeholder="Seleccione..."
                 style="min-width: 200px;"
                 class="browser-default black-text browser-default"
@@ -109,7 +109,7 @@
     </div>
     <div class="col s12 m6 l5">
         <mat-select   id="tipoDeActividad"
-                [(ngModel)]="eventoObject.tipoActividad"
+                [(ngModel)]="actividadObject.tipoActividad"
                 placeholder="Seleccione..."
                 class="browser-default black-text browser-default"
                 style="min-width: 200px;"
@@ -131,13 +131,13 @@
   <div class="row">
     <div class="col s12 m6 l4">
           <input id="descripcion"
-           placeholder="Nombre de la Actividad (*)"  [(ngModel)]="eventoObject.descripcion">
+           placeholder="Nombre de la Actividad (*)"  [(ngModel)]="actividadObject.descripcion">
     </div>
   </div>
   <div class="row">
     <div class="col s12 m6 l4">
           <input type="text" id="nombre"
-            placeholder="Referente/Profesor (*)"  [(ngModel)]="eventoObject.nombre">
+            placeholder="Referente/Profesor (*)"  [(ngModel)]="actividadObject.nombre">
     </div>
   </div>
   <div class="row">
@@ -151,7 +151,7 @@
   <div class="row">
     <div class="col s12 m6 l4">
         <mat-select   id="zonaAula"
-                [(ngModel)]="eventoObject.zonaAula"
+                [(ngModel)]="actividadObject.zonaAula"
                 placeholder="Seleccione..."
                 class="browser-default black-text browser-default"
                 style="min-width: 250px;"
@@ -162,7 +162,7 @@
     </div>
     <div class="col s12 m6 l4">
         <mat-select   id="estadoAct"
-                [(ngModel)]="eventoObject.estadoActividad"
+                [(ngModel)]="actividadObject.estadoActividad"
                 placeholder="Seleccione..."
                 class="browser-default black-text browser-default"
                 style="min-width: 250px;"
@@ -176,7 +176,7 @@
   </div>
   <div class="row">
     <div class="col s2">
-      <a (click)="SendEvento(eventoObject)"
+      <a (click)="SendActividad(actividadObject)"
          class="waves-effect waves-light indigo darken-1 btn">OK</a>
     </div>
     <div class="col s1">

@@ -14,12 +14,12 @@ import { Actividad } from "../model/actividad.model";
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-evento',
-  templateUrl: './evento.component.html',
-  styleUrls: ['./evento.component.css']
+  selector: 'app-actividad',
+  templateUrl: './actividad.component.html',
+  styleUrls: ['./actividad.component.css']
 })
 
-export class EventoComponent implements OnInit  {
+export class ActividadComponent implements OnInit  {
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2020, 0, 1);
@@ -36,14 +36,14 @@ export class EventoComponent implements OnInit  {
 
   constructor(
     private authService: AuthService,
-    private eventoService: ActividadService,
+    private actividadService: ActividadService,
     private afService: FirebaseconnectionService,
     private router: Router,
    // private dateAdapter: DateAdapter<Date>
     ) { }
 
   ngOnInit() {
-    this.eventoService.getEventos();
+    this.actividadService.getActividades();
    // this.aulas = this.afService.getAulas();
    // this.estadoActividades = this.afService.getEstados();
    // this.tipos = this.afService.getTiposActividades();
@@ -57,26 +57,26 @@ export class EventoComponent implements OnInit  {
   // return this.authService.loggedIn;
   }
 
- /* SendEvento(eventoSend: Evento) {
+ /* SendActividad(actividadSend: Actividad) {
     // TODO: hacer contrl de error y validaciones
-    if ( eventoSend.horaInicio === "" || eventoSend.horaFin === "" ||
-        eventoSend.descripcion === "" || eventoSend.nombre === "" ||
-        eventoSend.tipoActividad === "" || eventoSend.zonaAula === "") {
+    if ( actividadSend.horaInicio === "" || actividadSend.horaFin === "" ||
+        actividadSend.descripcion === "" || actividadSend.nombre === "" ||
+        actividadSend.tipoActividad === "" || actividadSend.zonaAula === "") {
       alert("Por favor complete todos los campos obligatorios");
       return false;
     }
-    eventoSend.pickerDesde = moment(eventoSend.pickerDesde).locale('es').format('YYYY-MM-DD');
-    eventoSend.pickerHasta = moment(eventoSend.pickerHasta).locale('es').format('YYYY-MM-DD');
+    actividadSend.pickerDesde = moment(actividadSend.pickerDesde).locale('es').format('YYYY-MM-DD');
+    actividadSend.pickerHasta = moment(actividadSend.pickerHasta).locale('es').format('YYYY-MM-DD');
     // check undefined && false
-    let dias = [(eventoSend.chk_lun == true),
-      (eventoSend.chk_ma == true),
-        (eventoSend.chk_mi == true),
-          (eventoSend.chk_ju == true),
-            (eventoSend.chk_vi == true),
-              (eventoSend.chk_sa == true),
-                (eventoSend.chk_do == true)];//creo el arreglo de días
-    eventoSend.dias = dias;
-  //  this.eventoService.addActividad(eventoSend);
+    let dias = [(actividadSend.chk_lun == true),
+      (actividadSend.chk_ma == true),
+        (actividadSend.chk_mi == true),
+          (actividadSend.chk_ju == true),
+            (actividadSend.chk_vi == true),
+              (actividadSend.chk_sa == true),
+                (actividadSend.chk_do == true)];//creo el arreglo de días
+    actividadSend.dias = dias;
+  //  this.actividadService.addActividad(actividadSend);
     this.goToMain();
   }*/
 
@@ -86,16 +86,16 @@ export class EventoComponent implements OnInit  {
 
 
   onClear() {
-    this.eventoService.form.reset();
-    this.eventoService.initializeFormGroup();
+    this.actividadService.form.reset();
+    this.actividadService.initializeFormGroup();
     
   }
 
   onSubmit() {
-    if (this.eventoService.form.valid) {
-      this.eventoService.insertEvento(this.eventoService.form.value);
-      this.eventoService.form.reset();
-      this.eventoService.initializeFormGroup();
+    if (this.actividadService.form.valid) {
+      this.actividadService.insertActividad(this.actividadService.form.value);
+      this.actividadService.form.reset();
+      this.actividadService.initializeFormGroup();
       console.log("Submitted successfully");
      // this.notificationService.success(':: Submitted successfully');
     }

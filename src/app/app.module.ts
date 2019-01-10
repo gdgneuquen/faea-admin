@@ -7,11 +7,11 @@ import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PizarraComponent } from './pizarra/pizarra.component';
-import { EventoComponent } from './evento/evento.component';
+import { ActividadComponent } from './actividad/actividad.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
-import { EventoDetalle } from './evento-detalle/evento-detalle.component';
+import { ActividadDetalle } from './actividad-detalle/actividad-detalle.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { PageNotFoundComponent} from './notfound/page.not.found.component';
 import { OrderModule } from 'ngx-order-pipe';
@@ -39,11 +39,11 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     PizarraComponent,
-    EventoComponent,
+    ActividadComponent,
     NotificacionesComponent,
     HomeComponent,
     HeaderComponent,
-    EventoDetalle,
+    ActividadDetalle,
     PageNotFoundComponent,
     AuthenticationComponent
   ],

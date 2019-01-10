@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   actividades: Observable<Evento[]>;
   msgVal: string = ''; //mensaje de entrada del form
   selectedActividad: string = '';
-  displayedColumns: string[] = ['periodo', 'horainicio', 'horafin','actividad', 'tipo', 'profe','aula'];
+  displayedColumns: string[] = ['periodo', 'horainicio', 'horafin','actividad', 'tipo', 'profe','aula','acciones'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
