@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActividadService } from '../model/actividad.service';
@@ -40,7 +41,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
       private authService: AuthService,
-      public af: ActividadService
+      public af: ActividadService,
+      private router: Router
   ){}
 
   ngOnInit(){
@@ -76,6 +78,10 @@ export class HomeComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  public editarActividad(id:number): void {
+    this.router.navigate(['/actividad', id]);
   }
 
 }

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Actividad } from "../model/actividad.model";
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActividadService {
 
-  constructor(private af: AngularFireDatabase) { }
+  constructor(private af: AngularFireDatabase,private datePipe: DatePipe) { }
 
   actividadesList: AngularFireList<any>;
 
@@ -44,10 +45,6 @@ export class ActividadService {
   getActividades() {
     this.actividadesList = this.af.list('actividades');
     return this.actividadesList.snapshotChanges();
-  
-    /*return this.af.list('/actividades',ref => ref.orderByChild('horaInicio')).snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });*/
   }
 
   getActividadesRef() {
@@ -75,8 +72,8 @@ export class ActividadService {
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
         periodo: actividad.periodo,
-        pickerDesde: actividad.fechaDesde,
-        pickerHasta: actividad.fechaHasta,
+        pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
+        pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
         tipoActividad: actividad.tipo,
         zonaAula: actividad.aula,
       }
@@ -107,5 +104,16 @@ export class ActividadService {
     removeActividadByKey(key: string) {
       const item = this.af.object('/actividades/' + key);
       item.remove();
+    }
+
+    getHorarios() {
+      let arr = [], i, j;
+      for (i = 7; i < 24; i++) {
+        for ( j = 0; j < 4; j++) {
+          //fix: usar hora con formato 99:99 para ahorrar conversiones con momentjs
+          arr.push( ((i+'').length == 1 ? '0'+i : i) + ':' + (j === 0 ? '00' : 15 * j) );
+        }
+      }
+      return arr;
     }
 }

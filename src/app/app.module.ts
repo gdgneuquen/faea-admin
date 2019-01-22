@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app-router.module';
+import { DatePipe } from '@angular/common';
 //FORMS
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
@@ -60,7 +61,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [AuthService, FirebaseconnectionService],
+  providers: [AuthService, FirebaseconnectionService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

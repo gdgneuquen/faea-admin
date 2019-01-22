@@ -1,15 +1,11 @@
 import { Component, Input, NgZone, OnInit  } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';//Para trabajar con los observables desde rxjs
-import 'rxjs/add/operator/catch';//para poder tomar cosas
-import 'rxjs/add/operator/toPromise';
 
 import { Router } from '@angular/router';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../model/auth.service';
 import { ActividadService } from '../model/actividad.service';
-import { FirebaseconnectionService } from '../model/firebaseconnection.service';
-import { Actividad } from "../model/actividad.model";
+import { AulaService } from '../model/aula.service';
+import { TipoActividadService } from '../model/tipo-actividad.service';
 
 import * as moment from 'moment';
 
@@ -25,29 +21,22 @@ export class ActividadComponent implements OnInit  {
   maxDate = new Date(2020, 0, 1);
   hoy = moment().locale('es').format('DD/M/YYYY');
 
-  actividades: Observable<any[]>;
-  numberHora: any[];
-  tipos: Observable<any[]>;
-  estadoActividades: Observable<any[]>;
   id: any; // id recibido
   periodos: string[];
-  aulas: Observable<any[]>;
   msgVal: string = ''; //mensaje de entrada del form
 
   constructor(
-    private authService: AuthService,
+    //private authService: AuthService,
     private actividadService: ActividadService,
-    private afService: FirebaseconnectionService,
-    private router: Router,
-   // private dateAdapter: DateAdapter<Date>
+    private aulaService: AulaService,
+    private tipoActividadService: TipoActividadService,
+    private router: Router
     ) { }
 
   ngOnInit() {
     this.actividadService.getActividades();
-   // this.aulas = this.afService.getAulas();
    // this.estadoActividades = this.afService.getEstados();
-   // this.tipos = this.afService.getTiposActividades();
-    this.numberHora = this.afService.getHorarios();
+    this.numberHora = this.actividadService.getHorarios();
     //this.periodos = this.afService.getPeriodos();
    // this.dateAdapter.setLocale('es-ar');
 
