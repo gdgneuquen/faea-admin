@@ -24,7 +24,15 @@ export class ActividadService {
     fechaDesde: new FormControl('', Validators.required),
     fechaHasta: new FormControl('', Validators.required),
     estado: new FormControl(''),
-    dias: new FormControl(''),
+    dias: new FormGroup({
+      lu: new FormControl(false),
+      ma: new FormControl(false),
+      mi: new FormControl(false),
+      ju: new FormControl(false),
+      vi: new FormControl(false),
+      sa: new FormControl(false),
+      do: new FormControl(false)
+    })
   });
 
   initializeFormGroup() {
@@ -71,7 +79,7 @@ export class ActividadService {
         horaFin: actividad.horaFin,
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
-        periodo: actividad.periodo,
+        periodo: "1er Cuatrimestre",
         pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
         pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
         tipoActividad: actividad.tipo,

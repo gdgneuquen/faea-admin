@@ -24,6 +24,7 @@ export class ActividadComponent implements OnInit  {
   id: any; // id recibido
   periodos: string[];
   msgVal: string = ''; //mensaje de entrada del form
+  numberHora: any[];
 
   constructor(
     //private authService: AuthService,
@@ -86,6 +87,7 @@ export class ActividadComponent implements OnInit  {
       this.actividadService.form.reset();
       this.actividadService.initializeFormGroup();
       console.log("Submitted successfully");
+     // console.log(this.actividadService.form.value);
      // this.notificationService.success(':: Submitted successfully');
     }
   }
