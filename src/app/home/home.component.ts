@@ -1,25 +1,9 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActividadService } from '../model/actividad.service';
+import { AulaService } from '../model/aula.service';
 import { AuthService } from '../model/auth.service';
-import * as moment from 'moment';
-
-export interface Evento {
-  key?: string;
-  descripcion?: string;
-  dias?: any[];
-  horaFin?: string;
-  horaInicio?: string;
-  nombre?: string;
-  pickerDesde?: string;
-  pickerHasta?: string;
-  estadoActividad?: string;
-  tipoActividad?: string;
-  zonaAula?: string;
-  periodo?: string;
-}
 
 @Component({
   selector: 'app-home',
@@ -28,25 +12,43 @@ export interface Evento {
 })
 export class HomeComponent implements OnInit {
 
-  hoy = moment().locale('es').format('LLLL');
-  actividades: Observable<Evento[]>;
   msgVal: string = ''; //mensaje de entrada del form
-  selectedActividad: string = '';
-  displayedColumns: string[] = ['periodo', 'horainicio', 'horafin','actividad', 'tipo', 'profe','aula','acciones'];
-  dataSource = new MatTableDataSource();
+  displayedColumns: string[] = ['actividad','profe','dias','horario','fechainicio','fechafin','tipo' ,'aula','acciones'];
+  dataSource: MatTableDataSource<any>;
+  searchKey: string;
+  showPeriodo:boolean=false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
 
   constructor(
       private authService: AuthService,
-      public af: ActividadService,
+      public actividadService: ActividadService,
+      private aulaService: AulaService,
       private router: Router
   ){}
 
   ngOnInit(){
-    return this.af.getActividadesRef().subscribe(res => this.dataSource.data = res);
+    return this.actividadService.getActividades().subscribe(
+
+      list => {
+          let array = list.map(item => {
+            let aulaName = this.aulaService.getAula(item.payload.val()['zonaAula']);
+            let diasCadena= this.actividadService.getDias(item.payload.val()['dias']);
+            let horario = item.payload.val()['horaInicio'] + ' a ' + item.payload.val()['horaFin'];
+           
+            return {
+              $key: item.key,
+              aulaName,
+              diasCadena,
+              horario,
+              ...item.payload.val()
+            };
+          });
+          this.dataSource = new MatTableDataSource(array);
+          this.dataSource.sort=this.sort;
+          this.dataSource.paginator = this.paginator;
+      });
   }
 
   isUserLoggedIn(){
@@ -69,10 +71,10 @@ export class HomeComponent implements OnInit {
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
-  ngAfterViewInit() {
+ /* ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
+  }*/
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -80,8 +82,23 @@ export class HomeComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  onSearchClear() {
+    this.searchKey = "";
+    this.applyFilter("");
+  }
+
   public editarActividad(id:number): void {
     this.router.navigate(['/actividad', id]);
+  }
+
+  mostrarPeriodo() {
+    if(!this.showPeriodo){
+      this.showPeriodo=true;
+      return this.displayedColumns=['actividad','profe','dias','horario','fechainicio','fechafin', 'periodo','tipo' ,'aula','acciones'];
+    }else{
+      this.showPeriodo=false;
+      return this.displayedColumns=['actividad','profe','dias','horario', 'horafin','fechainicio','fechafin', 'tipo' ,'aula','acciones'];
+    }   
   }
 
 }

@@ -4,9 +4,20 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Actividad } from "../model/actividad.model";
 import { DatePipe } from '@angular/common';
 
+enum dias {
+  Lu = 0,
+  Ma,
+  Mi,
+  Ju,
+  Vi,
+  Sa,
+  Do
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class ActividadService {
 
   constructor(private af: AngularFireDatabase,private datePipe: DatePipe) { }
@@ -83,7 +94,7 @@ export class ActividadService {
         pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
         pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
         tipoActividad: actividad.tipo,
-        zonaAula: actividad.aula,
+        zonaAula: actividad.aula.$key,
       }
     );
   }
@@ -123,5 +134,17 @@ export class ActividadService {
         }
       }
       return arr;
+    }
+
+    getDias(dato:Array<boolean>):string{
+      let response:string="";
+      if(dato[dias.Lu]) response=response+"Lu,";
+      if(dato[dias.Ma]) response=response+" Ma,";
+      if(dato[dias.Mi]) response=response+" Mi,";
+      if(dato[dias.Ju]) response=response+" Ju,";
+      if(dato[dias.Vi]) response=response+" Vi,";
+      if(dato[dias.Sa]) response=response+" Sa,";
+      if(dato[dias.Sa]) response=response+" Do,";
+      return response.substr(0,response.length-1);      
     }
 }

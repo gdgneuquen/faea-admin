@@ -6,13 +6,18 @@
         <button mat-raised-button>
           <mat-icon>add</mat-icon>Crear Actividad
         </button>
+        <!--button mat-raised-button (click)="mostrarPeriodo()">
+            <mat-icon>done</mat-icon> Mostrar Periodo
+          </button-->
         <mat-form-field class="search-form-field" floatLabel="never">
-          <input matInput [(ngModel)]="searchKey" placeholder="Buscar" autocomplete="off" (keyup)="applyFilter()">
+          <input matInput [(ngModel)]="searchKey" placeholder="Buscar" autocomplete="off" (keyup)="applyFilter($event.target.value)">
           <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
       </div>
+
+      
 
 <mat-card-content>
   <!--mat-form-field>
@@ -22,40 +27,52 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
 
+      <!-- Actividad Column -->
+      <ng-container matColumnDef="actividad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Actividad </th>
+          <td mat-cell *matCellDef="let row">  {{row.descripcion}} </td>
+      </ng-container>
+
+      <!-- Profe Column -->
+      <ng-container matColumnDef="profe">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Prof./Ref. </th>
+          <td mat-cell *matCellDef="let row">  {{row.nombre}} </td>
+      </ng-container>
+
+      <!-- Dias Column -->
+      <ng-container matColumnDef="dias">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Dias </th>
+          <td mat-cell *matCellDef="let row">  {{row.diasCadena}} </td>
+      </ng-container>
+
+      <!-- Horario Column -->
+      <ng-container matColumnDef="horario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Horario</th>
+          <td mat-cell *matCellDef="let row">  {{row.horario}}</td>
+      </ng-container>
+
+      <!-- Fecha Inicio Column -->
+      <ng-container matColumnDef="fechainicio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> F. Desde</th>
+          <td mat-cell *matCellDef="let row">  {{row.pickerDesde | date: 'dd/MM/yy' }}</td>
+      </ng-container>
+
+      <!-- Fecha Fin Column -->
+      <ng-container matColumnDef="fechafin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> F. Hasta</th>
+          <td mat-cell *matCellDef="let row">  {{row.pickerHasta | date: 'dd/MM/yy' }}</td>
+      </ng-container>
+
       <!-- Periodo Column -->
       <ng-container matColumnDef="periodo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Período</th>
           <td mat-cell *matCellDef="let row">  {{row.periodo}}</td>
       </ng-container>
   
-      <!-- Hora Inicio Column -->
-      <ng-container matColumnDef="horainicio">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora Inicio</th>
-        <td mat-cell *matCellDef="let row">  {{row.horaInicio}}</td>
-      </ng-container>
-
-      <!-- Hora Fin Column -->
-      <ng-container matColumnDef="horafin">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora Fin</th>
-        <td mat-cell *matCellDef="let row">  {{row.horaFin}}</td>
-      </ng-container>
-  
-      <!-- Actividad Column -->
-      <ng-container matColumnDef="actividad">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actividad </th>
-        <td mat-cell *matCellDef="let row">  {{row.descripcion}} </td>
-      </ng-container>
-  
       <!-- Tipo Column -->
       <ng-container matColumnDef="tipo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
         <td mat-cell *matCellDef="let row">  {{row.tipoActividad}} </td>
-      </ng-container>
-  
-      <!-- Profe Column -->
-      <ng-container matColumnDef="profe">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prof./Ref. </th>
-        <td mat-cell *matCellDef="let row">  {{row.nombre}} </td>
       </ng-container>
   
       <!-- Aula Column -->
@@ -79,8 +96,7 @@
             </button>
         </td>
     </ng-container>
-  
-  
+
       <!-- Estado Column -->
       <!--ng-container matColumnDef="estado">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
@@ -89,6 +105,7 @@
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
     </table>
     <mat-paginator [pageSizeOptions]="[25, 50, 100, 150]"></mat-paginator>
   </div>

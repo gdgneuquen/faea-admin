@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app-router.module';
-import { DatePipe } from '@angular/common';
+import { DatePipe,registerLocaleData } from '@angular/common';
 //FORMS
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
@@ -36,6 +36,11 @@ import {MatButtonModule,MatMenuModule,MatToolbarModule,MatIconModule,MatGridList
 import {MatInputModule, MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule} from '@angular/material';
 import { environment } from '../environments/environment';
 
+//Locale Spanish-Argentina
+import localeEsAr from '@angular/common/locales/es-AR';
+
+registerLocaleData(localeEsAr);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +66,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [AuthService, FirebaseconnectionService,DatePipe],
+  providers: [AuthService, FirebaseconnectionService,DatePipe, { provide: LOCALE_ID, useValue: "es-AR" }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

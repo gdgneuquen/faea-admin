@@ -23,7 +23,8 @@ import * as Material from "@angular/material";;
     Material.MatSnackBarModule,
     Material.MatCardModule,
     Material.MatIconModule,
-    Material.MatMenuModule
+    Material.MatMenuModule,
+    Material.MatAutocompleteModule
   ],
   exports: [
     Material.MatToolbarModule,
@@ -44,7 +45,8 @@ import * as Material from "@angular/material";;
     Material.MatSnackBarModule,
     Material.MatCardModule,
     Material.MatIconModule,
-    Material.MatMenuModule
+    Material.MatMenuModule,
+    Material.MatAutocompleteModule
   ],
   declarations: []
 })

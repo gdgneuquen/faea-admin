@@ -1,5 +1,7 @@
 import { Component, Input, NgZone, OnInit  } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'
+import {FormGroup} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../model/auth.service';
@@ -8,6 +10,10 @@ import { AulaService } from '../model/aula.service';
 import { TipoActividadService } from '../model/tipo-actividad.service';
 
 import * as moment from 'moment';
+
+export interface Aula {
+  nombre: string;
+}
 
 @Component({
   selector: 'app-actividad',
@@ -25,6 +31,8 @@ export class ActividadComponent implements OnInit  {
   periodos: string[];
   msgVal: string = ''; //mensaje de entrada del form
   numberHora: any[];
+  actividadForm: FormGroup;
+  filteredAulas: Observable<Aula[]>;
 
   constructor(
     //private authService: AuthService,
@@ -35,12 +43,27 @@ export class ActividadComponent implements OnInit  {
     ) { }
 
   ngOnInit() {
+    this.actividadForm=this.actividadService.form;
     this.actividadService.getActividades();
-   // this.estadoActividades = this.afService.getEstados();
     this.numberHora = this.actividadService.getHorarios();
-    //this.periodos = this.afService.getPeriodos();
-   // this.dateAdapter.setLocale('es-ar');
+   
+   this.filteredAulas = this.actividadForm.get('aula').valueChanges
+   .pipe(
+    startWith<string | Aula>(''),
+    map(value => typeof value === 'string' ? value : value.nombre),
+    map(name => name ? this._filter(name) : this.aulaService.array.slice())
+  );
 
+  }
+
+  displayFn(user?: Aula): string | undefined {
+    return user ? user.nombre : undefined;
+  }
+
+  private _filter(name: string): Aula[] {
+    const filterValue = name.toLowerCase();
+
+    return this.aulaService.array.filter(option => option.nombre.toLowerCase().indexOf(filterValue) === 0);
   }
 
   isUserLoggedIn() {
@@ -83,11 +106,11 @@ export class ActividadComponent implements OnInit  {
 
   onSubmit() {
     if (this.actividadService.form.valid) {
-      this.actividadService.insertActividad(this.actividadService.form.value);
+     /* this.actividadService.insertActividad(this.actividadService.form.value);
       this.actividadService.form.reset();
       this.actividadService.initializeFormGroup();
-      console.log("Submitted successfully");
-     // console.log(this.actividadService.form.value);
+      console.log("Submitted successfully");*/
+      console.log(this.actividadService.form.value);
      // this.notificationService.success(':: Submitted successfully');
     }
   }
