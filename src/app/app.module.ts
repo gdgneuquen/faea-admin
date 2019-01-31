@@ -12,7 +12,6 @@ import { ActividadComponent } from './actividad/actividad.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
-import { ActividadDetalle } from './actividad-detalle/actividad-detalle.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { PageNotFoundComponent} from './notfound/page.not.found.component';
 import { OrderModule } from 'ngx-order-pipe';
@@ -49,7 +48,6 @@ registerLocaleData(localeEsAr);
     NotificacionesComponent,
     HomeComponent,
     HeaderComponent,
-    ActividadDetalle,
     PageNotFoundComponent,
     AuthenticationComponent
   ],
