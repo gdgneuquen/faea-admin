@@ -3,14 +3,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, LOCALE_ID} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe,registerLocaleData } from '@angular/common';
-import {AppComponent} from './app.component';
+import { AppComponent } from './app.component';
 
 // Routing Module
-import {AppRoutingModule} from './app.routing';
+import { AppRoutingModule } from './app.routing';
 
 // Layouts
-import {LayoutComponent} from './layout/layout.component';
-import {P404Component} from './page/404.component';
+import { LayoutComponent } from './layout/layout.component';
+import { P404Component } from './page/404.component';
 
 // Model & Servicios
 import { AuthService } from './model/auth.service';
@@ -42,9 +42,14 @@ registerLocaleData(localeEsAr);
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    MaterialModule
+    MaterialModule,
   ],
-  providers: [AuthService, FirebaseconnectionService,DatePipe, { provide: LOCALE_ID, useValue: "es-AR" }],
+  providers: [
+    AuthService,
+    FirebaseconnectionService,
+    DatePipe, 
+    { provide: LOCALE_ID, useValue: "es-AR" }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
