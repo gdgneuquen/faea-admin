@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { Actividad } from "../model/actividad.model";
 import { DatePipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/fromPromise';
 
 enum dias {
   Lu = 0,
@@ -66,20 +68,22 @@ export class ActividadService {
     return this.actividadesList.snapshotChanges();
   }
 
-  getActividadesRef() {
-    return this.af.list('/actividades').valueChanges();
-  }
-  
-
-  getListActividadesWithOptions(options: any): AngularFireList<any[]> {
-    return this.af.list('/actividades', options);
+  getActividadById(id:string): Observable<any> {
+    return this.af.object('/actividades/' + id).snapshotChanges();
   }
 
- /* getActividadByKey(key: string): AngularFireObject<any> {
-    return this.af.object('/actividades/' + key);
-  }*/
+  updateActividadById(actividad: Actividad): Observable<any> {
+    return Observable.fromPromise(
+      this.af.object('/actividades/' + actividad.key).update(actividad)
+    );
+  }
 
-  
+  addActividad(actividad: Actividad): Observable<any> {
+    return Observable.fromPromise(
+      this.af.object('/actividades/' + actividad.key).set(actividad)
+    );
+  }
+
   insertActividad(actividad) {
     // TODO: asume que fue validado
     this.af.list('/actividades').push(
@@ -98,27 +102,6 @@ export class ActividadService {
       }
     );
   }
-
-  updateActividadByKey(key: string, actividad: Actividad) {
-    // no actualizaba
-   // actividad.dias = [actividad.chk_lun, actividad.chk_ma, actividad.chk_mi, actividad.chk_ju, actividad.chk_vi, actividad.chk_sa, actividad.chk_do];
-    console.log(actividad);
-    this.af.object('/actividades/' + key).update(actividad);
-      /*{
-        descripcion: actividad.descripcion,
-        dias: actividad.dias,
-        estadoActividad: actividad.estadoActividad,
-        horaFin: actividad.horaFin,
-        horaInicio: actividad.horaInicio,
-        nombre: actividad.nombre,
-        periodo: actividad.periodo,
-        pickerDesde: actividad.pickerDesde,
-        pickerHasta: actividad.pickerHasta,
-        tipoActividad: actividad.tipoActividad,
-        zonaAula: actividad.zonaAula
-      }
-    );*/
-    }
 
     removeActividadByKey(key: string) {
       const item = this.af.object('/actividades/' + key);

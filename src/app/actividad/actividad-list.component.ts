@@ -63,10 +63,6 @@ export class ActividadListComponent implements OnInit {
       }
   }
 
-  modificarActivity(key:string){
-   // this.router.navigate(['/detalle', key]);
-  }
-
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
@@ -87,8 +83,8 @@ export class ActividadListComponent implements OnInit {
     this.applyFilter("");
   }
 
-  public editarActividad(id:number): void {
-    this.router.navigate(['/actividad', id]);
+  public editarActividad(key:string): void {
+    this.router.navigate(['/actividad', key]);
   }
 
   mostrarPeriodo() {
