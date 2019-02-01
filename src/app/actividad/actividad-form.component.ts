@@ -16,12 +16,12 @@ export interface Aula {
 }
 
 @Component({
-  selector: 'app-actividad',
-  templateUrl: './actividad.component.html',
-  styleUrls: ['./actividad.component.css']
+  selector: 'app-actividad-form',
+  templateUrl: './actividad-form.component.html',
+  styleUrls: ['./actividad-form.component.css']
 })
 
-export class ActividadComponent implements OnInit  {
+export class ActividadFormComponent implements OnInit  {
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2020, 0, 1);

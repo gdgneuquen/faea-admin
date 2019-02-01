@@ -1,38 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, LOCALE_ID} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { routing } from './app-router.module';
 import { DatePipe,registerLocaleData } from '@angular/common';
-//FORMS
-import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
+import {AppComponent} from './app.component';
 
-import { AppComponent } from './app.component';
-import { PizarraComponent } from './pizarra/pizarra.component';
-import { ActividadComponent } from './actividad/actividad.component';
-import { NotificacionesComponent } from './notificaciones/notificaciones.component';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { AuthenticationComponent } from './authentication/authentication.component';
-import { PageNotFoundComponent} from './notfound/page.not.found.component';
-import { OrderModule } from 'ngx-order-pipe';
+// Routing Module
+import {AppRoutingModule} from './app.routing';
 
-//Servicios
+// Layouts
+import {LayoutComponent} from './layout/layout.component';
+import {P404Component} from './page/404.component';
+
+// Model & Servicios
 import { AuthService } from './model/auth.service';
 import { FirebaseconnectionService } from './model/firebaseconnection.service';
-
-//Shared
-import { MaterialModule } from './shared/material.module';
-
-//Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-//Material
-import { MatDatepickerModule, MatNativeDateModule , MatCheckboxModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule,MatMenuModule,MatToolbarModule,MatIconModule,MatGridListModule,} from '@angular/material';
-import {MatInputModule, MatSelectModule,MatTableModule,MatSortModule,MatPaginatorModule,MatCardModule} from '@angular/material';
+//Shared
+import { MaterialModule } from './shared/material.module';
 import { environment } from '../environments/environment';
 
 //Locale Spanish-Argentina
@@ -42,26 +30,18 @@ registerLocaleData(localeEsAr);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PizarraComponent,
-    ActividadComponent,
-    NotificacionesComponent,
-    HomeComponent,
-    HeaderComponent,
-    PageNotFoundComponent,
-    AuthenticationComponent
+      AppComponent,
+      LayoutComponent,
+      P404Component
   ],
   imports: [
     BrowserModule,
-    routing,
-    FormsModule,
-    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
     HttpClientModule,
-    OrderModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    BrowserAnimationsModule,
     MaterialModule
   ],
   providers: [AuthService, FirebaseconnectionService,DatePipe, { provide: LOCALE_ID, useValue: "es-AR" }],
