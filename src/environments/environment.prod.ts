@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyAmxdtlMl1jToqEFO5xOH_clC__nXKHpO0",
-    authDomain: "faea-eventos-2564a.firebaseapp.com",
-    databaseURL: "https://faea-eventos-2564a.firebaseio.com",
-    projectId: "faea-eventos-2564a",
-    storageBucket: "faea-eventos-2564a.appspot.com",
-    messagingSenderId: "1072533022657"
+    apiKey: "AIzaSyBPX5UnZYgccgbqrAipQOhsc8chEUbRwVc",
+    authDomain: "faea-eventos.firebaseapp.com",
+    databaseURL: "https://faea-eventos.firebaseio.com",
+    projectId: "faea-eventos",
+    storageBucket: "faea-eventos.appspot.com",
+    messagingSenderId: "966324489874"
   }
 };

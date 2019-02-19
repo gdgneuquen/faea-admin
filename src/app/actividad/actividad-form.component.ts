@@ -39,9 +39,9 @@ export class ActividadFormComponent implements OnInit  {
 
   constructor(
     //private authService: AuthService,
-    private actividadService: ActividadService,
-    private aulaService: AulaService,
-    private tipoActividadService: TipoActividadService,
+    public actividadService: ActividadService,
+    public aulaService: AulaService,
+    public tipoActividadService: TipoActividadService,
     private router: Router,
     private activatedRoute: ActivatedRoute
     ) { }

@@ -5,6 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe,registerLocaleData } from '@angular/common';
 import { AppComponent } from './app.component';
 
+//temp
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { PizarraComponent } from './pizarra/pizarra.component';
+
+
 // Routing Module
 import { AppRoutingModule } from './app.routing';
 
@@ -32,7 +37,9 @@ registerLocaleData(localeEsAr);
   declarations: [
       AppComponent,
       LayoutComponent,
-      P404Component
+      P404Component,
+      AuthenticationComponent,
+      PizarraComponent
   ],
   imports: [
     BrowserModule,

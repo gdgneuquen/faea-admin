@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "faea-admin",
+    "admin": "faea-admin"
+  }
+}
