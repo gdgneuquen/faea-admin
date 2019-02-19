@@ -3,40 +3,49 @@
   <mat-grid-list cols="2" rowHeight="400px">
     <mat-grid-tile>
       <div class="controles-container">
+
         <input type="hidden" formControlName="$key">
+
         <mat-form-field>
           <input formControlName="nombre" matInput placeholder="Nombre Actividad*">
           <mat-error>Este Campo es obligatorio.</mat-error>
         </mat-form-field>
+
         <mat-form-field>
           <input formControlName="referente" matInput placeholder="Referente/Profesor*">
           <mat-error>Este Campo es obligatorio.</mat-error>
         </mat-form-field>
 
         <!--mat-form-field>
-            <mat-select formControlName="aula" placeholder="Seleccione Aula*">
-              <ng-container *ngFor="let aula of aulaService.array">
-                <mat-option value="{{aula.$key}}">{{aula.nombre}}</mat-option>
-              </ng-container>
-            </mat-select>
+          <input formControlName="aula" matInput placeholder="Aula*">
+          <mat-error>Este Campo es obligatorio.</mat-error>
         </mat-form-field-->
 
-         <mat-form-field>
+        <mat-form-field>
+            <mat-select formControlName="aula" placeholder="Seleccione Aula*">
+              <ng-container *ngFor="let aula of aulaService.array">
+                <mat-option value="{{aula.nombre}}">{{aula.nombre}}</mat-option>
+              </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+         <!--mat-form-field>
             <input type="text" placeholder="Aula" matInput formControlName="aula" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let aula of filteredAulas | async" [value]="aula">
                   {{aula.nombre}}
                 </mat-option>
               </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field-->
 
+        
         <mat-form-field>
-            <mat-select formControlName="tipo" placeholder="Seleccione Tipo*">
-              <ng-container *ngFor="let tipo of tipoActividadService.array">
-                <mat-option value="{{tipo.$key}}">{{tipo.nombre}}</mat-option>
-              </ng-container>
-            </mat-select>
-        </mat-form-field>
+          <mat-select formControlName="tipo" placeholder="Tipo Actividad*">
+            <ng-container *ngFor="let tipo of tipoActividadService.array">
+              <mat-option value="{{tipo.nombre}}">{{tipo.nombre}}</mat-option>
+            </ng-container>
+          </mat-select>
+      </mat-form-field>
         
       </div>
     </mat-grid-tile>
@@ -74,20 +83,20 @@
           Dias
           
             <section >
-                <mat-checkbox formControlName="lu" >Lunes</mat-checkbox>
-                <mat-checkbox formControlName="ma">Martes</mat-checkbox>
-                <mat-checkbox formControlName="mi">Miercoles</mat-checkbox>
-                <mat-checkbox formControlName="ju">Jueves</mat-checkbox>
-                <mat-checkbox formControlName="vi">Viernes</mat-checkbox>
-                <mat-checkbox formControlName="sa">Sabado</mat-checkbox>
-                <mat-checkbox formControlName="do">Domingo</mat-checkbox>
+                <mat-checkbox formControlName="lu" >Lu</mat-checkbox>
+                <mat-checkbox formControlName="ma">Ma</mat-checkbox>
+                <mat-checkbox formControlName="mi">Mi</mat-checkbox>
+                <mat-checkbox formControlName="ju">Ju</mat-checkbox>
+                <mat-checkbox formControlName="vi">Vi</mat-checkbox>
+                <mat-checkbox formControlName="sa">Sa</mat-checkbox>
+                <mat-checkbox formControlName="do">Do</mat-checkbox>
               </section>
            
         </div>
   
         <div class="button-row">
           <button mat-raised-button color="primary" type="submit" [disabled]="actividadService.form.invalid">Enviar</button>
-          <button mat-raised-button color="warn" (click)="onClear()">Limpiar</button>
+          <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
         </div>
       </div>
     </mat-grid-tile>

@@ -36,7 +36,6 @@ export class ActividadListComponent implements OnInit {
             let aulaName = this.aulaService.getAula(item.payload.val()['zonaAula']);
             let diasCadena= this.actividadService.getDias(item.payload.val()['dias']);
             let horario = item.payload.val()['horaInicio'] + ' a ' + item.payload.val()['horaFin'];
-           
             return {
               $key: item.key,
               aulaName,
@@ -55,11 +54,10 @@ export class ActividadListComponent implements OnInit {
      return this.authService.loggedIn;
   }
 
-  deleteActivity(key:string){
-      //alert("la Fecha inicio y hora inicio tienen que estar llennas");
-      if(confirm("Esta seguro que desea borrar el evento?")) {
-       // this.actividadesRef.remove( key);
-        this.msgVal = '';
+  deleteActividad(key:string){
+      if(confirm("Desea borrar la Actividad?")) {
+      //  this.actividadService.removeActividad(key);
+       // this.msgVal = '';
       }
   }
 

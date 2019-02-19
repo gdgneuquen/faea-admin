@@ -28,7 +28,7 @@ export class ActividadFormComponent implements OnInit  {
   parameters: any;
   mode: string = '';
   errorMessage: string;
-  actividad: Actividad;
+  actividad: any;
   submitted: boolean = false;
   periodos: string[];
   msgVal: string = ''; //mensaje de entrada del form
@@ -49,12 +49,12 @@ export class ActividadFormComponent implements OnInit  {
   ngOnInit() {
     this.actividadForm=this.actividadService.form;
     this.numberHora = this.actividadService.getHorarios(); 
-    this.filteredAulas = this.actividadForm.get('zonaAula').valueChanges
-      .pipe(
+    this.filteredAulas = this.actividadForm.get('aula').valueChanges
+    /*  .pipe(
         startWith<string | Aula>(''),
         map(value => typeof value === 'string' ? value : value.nombre),
         map(name => name ? this._filter(name) : this.aulaService.array.slice())
-      );
+      );*/
     this.getActividad();
   }
 
@@ -70,8 +70,7 @@ export class ActividadFormComponent implements OnInit  {
          .subscribe(
              actividad => {
                
-               this.actividad = {$key:actividad.key,...actividad.payload.val()};
-               console.log(this.actividad);
+               this.actividad = this.actividadService.translateActividad({$key:actividad.key,...actividad.payload.val()});
                this.actividadService.form.setValue(this.actividad);
                this.mode = 'update';
              },
@@ -85,7 +84,6 @@ export class ActividadFormComponent implements OnInit  {
              }
          );
    } else {
-     console.log(params['key']);
      this.mode = 'create';
      this.onClear();
    }
@@ -93,8 +91,7 @@ export class ActividadFormComponent implements OnInit  {
 }
 
 
-
-  displayFn(user?: Aula): string | undefined {
+ /* displayFn(user?: Aula): string | undefined {
     return user ? user.nombre : undefined;
   }
 
@@ -103,13 +100,13 @@ export class ActividadFormComponent implements OnInit  {
 
     return this.aulaService.array.filter(option => option.nombre.toLowerCase().indexOf(filterValue) === 0);
   }
-
+*/
   isUserLoggedIn() {
   // return this.authService.loggedIn;
   }
 
-  goToMain() {
-    this.router.navigate(['/main']);
+  onCancel() {
+    this.router.navigate(['/actividad']);
   }
 
 
@@ -121,70 +118,16 @@ export class ActividadFormComponent implements OnInit  {
 
   onSubmit() {
     if (this.actividadService.form.valid) {
+     if (this.mode==='update'){
+      this.actividadService.updateActividad(this.actividadService.form.value);
+      this.router.navigate(['/actividad']);
 
-     if (this.mode==='edit'){
-      this.actividadService.updateActividadById(this.actividadService.form.value)
-        .subscribe(
-            result => {
-              if (result.success) {
-                this.router.navigate(['/actividad']);
-                //this.actividadService.form.reset();
-                //this.actividadService.initializeFormGroup();
-              } else {
-                this.submitted = false;
-              }
-            },
-            error => {
-              this.submitted = false;
-              // Validation errors
-              if (error.status == 422) {
-                let errorFields = JSON.parse(error.data.message);
-                //this.setFormErrors(errorFields);
-                //this.setFormErrors(error.data);
-              }
-              // Unauthorized Access
-              else if (error.status == 401 || error.status == 403) {
-               // this.staffService.unauthorizedAccess(error);
-              }
-              // All other errors
-              else {
-                this.errorMessage = error.data.message;
-              }
-            }
-        );
-  }else{
-    this.actividad=this.actividadService.form.value;
-    delete this.actividad.key;
-    this.actividadService.addActividad(this.actividad)
-    .subscribe(
-        result => {
-          if (result.success) {
-            this.router.navigate(['/cliente']);
-          } else {
-            this.submitted = false;
-          }
-        },
-        error => {
-           this.submitted = false;
-          // Validation errors
-          if (error.status == 422) {
-            let errorFields = JSON.parse(error.data.message);
-            //this.setFormErrors(errorFields);
-            //this.setFormErrors(error.data);
-          }
-          // Unauthorized Access
-          else if (error.status == 401 || error.status == 403) {
-           // this.staffService.unauthorizedAccess(error);
-          }
-          // All other errors
-          else {
-            this.errorMessage = error.data.message;
-          }
-        }
-    );
-
-  }
+      }else{
+     // this.actividad=this.actividadService.form.value;
+      // delete this.actividad.key;
+      this.actividadService.insertActividad(this.actividadService.form.value);
+      this.router.navigate(['/actividad']);
     }
   }
-
+  }
 }

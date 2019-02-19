@@ -11,7 +11,7 @@ export class AulaService {
   array = [];
 
   constructor(private firebase: AngularFireDatabase) {
-    this.aulaList = this.firebase.list('aula');
+    this.aulaList = this.firebase.list('aula',ref => ref.orderByChild('nombre'));
     this.aulaList.snapshotChanges().subscribe(
       list => {
         this.array = list.map(item => {

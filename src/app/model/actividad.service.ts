@@ -60,6 +60,15 @@ export class ActividadService {
       aula: '',
       estado: '',
       tipo: '',
+      dias:{
+        lu: false,
+      ma: false,
+      mi: false,
+      ju: false,
+      vi: false,
+      sa: false,
+      do: false
+      }
     });
   }
 
@@ -72,25 +81,45 @@ export class ActividadService {
     return this.af.object('/actividades/' + id).snapshotChanges();
   }
 
-  updateActividadById(actividad: Actividad): Observable<any> {
-    return Observable.fromPromise(
-      this.af.object('/actividades/' + actividad.key).update(actividad)
-    );
-  }
-
-  addActividad(actividad: Actividad): Observable<any> {
-    return Observable.fromPromise(
-      this.af.object('/actividades/' + actividad.key).set(actividad)
-    );
+  translateActividad(actividad:any){
+    return{
+      $key: actividad.$key,
+      nombre: actividad.descripcion,
+      dias: {
+        lu: actividad.dias[0] == undefined ? false : actividad.dias[0],
+        ma: actividad.dias[1] == undefined ? false : actividad.dias[1],
+        mi: actividad.dias[2] == undefined ? false : actividad.dias[2],
+        ju: actividad.dias[3] == undefined ? false : actividad.dias[3],
+        vi: actividad.dias[4] == undefined ? false : actividad.dias[4],
+        sa: actividad.dias[5] == undefined ? false : actividad.dias[5],
+        do: actividad.dias[6] == undefined ? false : actividad.dias[6],
+      },
+      estado: actividad.estadoActividad,
+      horaFin: actividad.horaFin,
+      horaInicio: actividad.horaInicio,
+      referente: actividad.nombre,
+    //  periodo: actividad.periodo,
+      fechaDesde: actividad.pickerDesde == "" ? "" : this.datePipe.transform(actividad.pickerDesde, 'yyyy-MM-dd'),
+      fechaHasta: actividad.pickerHasta  == "" ? "" : this.datePipe.transform(actividad.pickerHasta, 'yyyy-MM-dd'),
+      tipo: actividad.tipoActividad,
+      aula: actividad.zonaAula,
+    }
   }
 
   insertActividad(actividad) {
-    // TODO: asume que fue validado
     this.af.list('/actividades').push(
       {
         descripcion: actividad.nombre,
-        dias: actividad.dias,
-        estadoActividad: actividad.estado,
+        dias: {
+          0: actividad.dias.lu,
+          1: actividad.dias.ma,
+          2: actividad.dias.mi,
+          3: actividad.dias.ju,
+          4: actividad.dias.vi,
+          5: actividad.dias.sa,
+          6: actividad.dias.do,
+        },
+        estadoActividad: "Normal",
         horaFin: actividad.horaFin,
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
@@ -98,14 +127,38 @@ export class ActividadService {
         pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
         pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
         tipoActividad: actividad.tipo,
-        zonaAula: actividad.aula.$key,
+        zonaAula: actividad.aula,
       }
     );
   }
 
-    removeActividadByKey(key: string) {
-      const item = this.af.object('/actividades/' + key);
-      item.remove();
+  updateActividad(actividad: any){
+    this.af.list('actividades').update(actividad.$key,
+      {
+        descripcion: actividad.nombre,
+        dias: {
+          0: actividad.dias.lu,
+          1: actividad.dias.ma,
+          2: actividad.dias.mi,
+          3: actividad.dias.ju,
+          4: actividad.dias.vi,
+          5: actividad.dias.sa,
+          6: actividad.dias.do,
+        },
+        estadoActividad: "Normal",
+        horaFin: actividad.horaFin,
+        horaInicio: actividad.horaInicio,
+        nombre: actividad.referente,
+        periodo: "1er Cuatrimestre",
+        pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
+        pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
+        tipoActividad: actividad.tipo,
+        zonaAula: actividad.aula,
+      });
+  }
+
+    removeActividad(key:string) {
+      this.af.list('actividades').remove(key);
     }
 
     getHorarios() {

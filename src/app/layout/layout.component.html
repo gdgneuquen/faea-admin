@@ -1,8 +1,34 @@
 <mat-toolbar class="container">
 
-        <img src="./assets/images/logofaea.svg">
-      
-        <div style="flex: 1 1"></div>
+        <span class="fill-remaining-space">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                  <button mat-menu-item [routerLink]="['/actividad', 'list']">
+                    <mat-icon>event_available</mat-icon>
+                    <span>Actividades</span>
+                  </button>
+                  <button mat-menu-item>
+                        <mat-icon>phonelink_ring</mat-icon>
+                        <span>App Live</span>
+                      </button>
+                  <button mat-menu-item>
+                    <mat-icon>account_balance</mat-icon>
+                    <span>Aulas</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>assignment</mat-icon>
+                    <span>Tipo Actividades</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Salir</span>
+                  </button>
+                </mat-menu>
+              </span>
+              <img src="./assets/images/logofaea.svg">
+              <!--span class="fill-remaining-space">FaEA Admin</span-->
     
 </mat-toolbar>
 

@@ -10,7 +10,7 @@ export class TipoActividadService {
   array = [];
 
   constructor(private firebase: AngularFireDatabase) {
-    this.tipoActividadList = this.firebase.list('tipoActividad');
+    this.tipoActividadList = this.firebase.list('tipo');
     this.tipoActividadList.snapshotChanges().subscribe(
       list => {
         this.array = list.map(item => {

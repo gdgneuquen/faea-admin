@@ -1,7 +1,7 @@
 <mat-card class="example-card">
 
   <div class="search-div">
-      <button mat-raised-button>
+      <button mat-raised-button [routerLink]="['/actividad', 'create']">
         <mat-icon>add</mat-icon>Crear Actividad
       </button>
       <!--button mat-raised-button (click)="mostrarPeriodo()">
@@ -89,7 +89,7 @@
           </button>
           <button mat-icon-button
                 matTooltip="Borrar Actividad"
-                (click)="editarActividad(row.key)">
+                (click)="deleteActividad(row.key)">
                 <mat-icon>delete_outline</mat-icon>
           </button>
       </td>

@@ -7,7 +7,7 @@ import {P404Component} from './page/404.component';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'actividad',
         pathMatch: 'full',
     },
     {

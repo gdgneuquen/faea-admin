@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import * as Material from "@angular/material";;
+import { MatMomentDateModule,MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter"
+import * as Material from "@angular/material";
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import * as Material from "@angular/material";;
     Material.MatCardModule,
     Material.MatIconModule,
     Material.MatMenuModule,
-    Material.MatAutocompleteModule
+    Material.MatAutocompleteModule,
+    MatMomentDateModule,
   ],
   exports: [
     Material.MatToolbarModule,
@@ -46,8 +48,12 @@ import * as Material from "@angular/material";;
     Material.MatCardModule,
     Material.MatIconModule,
     Material.MatMenuModule,
-    Material.MatAutocompleteModule
+    Material.MatAutocompleteModule,
+    MatMomentDateModule,
   ],
-  declarations: []
+  declarations: [],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+  ]
 })
 export class MaterialModule { }
