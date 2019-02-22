@@ -37,6 +37,7 @@ export class ActividadService {
     fechaDesde: new FormControl('', Validators.required),
     fechaHasta: new FormControl('', Validators.required),
     estado: new FormControl(''),
+    motivo: new FormControl(''),
     dias: new FormGroup({
       lu: new FormControl(false),
       ma: new FormControl(false),
@@ -59,6 +60,7 @@ export class ActividadService {
       fechaHasta: '',
       aula: '',
       estado: '',
+      motivo: '',
       tipo: '',
       dias:{
         lu: false,
@@ -95,6 +97,7 @@ export class ActividadService {
         do: actividad.dias[6] == undefined ? false : actividad.dias[6],
       },
       estado: actividad.estadoActividad,
+      motivo: actividad.motivo == 'undefined' ? "" : actividad.motivo,
       horaFin: actividad.horaFin,
       horaInicio: actividad.horaInicio,
       referente: actividad.nombre,
@@ -119,7 +122,8 @@ export class ActividadService {
           5: actividad.dias.sa,
           6: actividad.dias.do,
         },
-        estadoActividad: "Normal",
+        estadoActividad: actividad.estado,
+        motivo: actividad.motivo,
         horaFin: actividad.horaFin,
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
@@ -145,7 +149,8 @@ export class ActividadService {
           5: actividad.dias.sa,
           6: actividad.dias.do,
         },
-        estadoActividad: "Normal",
+        estadoActividad: actividad.estado,
+        motivo: actividad.motivo,
         horaFin: actividad.horaFin,
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
@@ -180,7 +185,7 @@ export class ActividadService {
       if(dato[dias.Ju]) response=response+" Ju,";
       if(dato[dias.Vi]) response=response+" Vi,";
       if(dato[dias.Sa]) response=response+" Sa,";
-      if(dato[dias.Sa]) response=response+" Do,";
+      if(dato[dias.Do]) response=response+" Do,";
       return response.substr(0,response.length-1);      
     }
 }

@@ -8,6 +8,7 @@ export interface IActividad {
   pickerDesde?: string;
   pickerHasta?: string;
   estadoActividad?: string;
+  motivo?: string;
   tipoActividad?: string;
   zonaAula?: string;
   periodo?: string;
@@ -34,6 +35,7 @@ export interface IActividad {
     public pickerDesde?: string,
     public pickerHasta?: string,
     public estadoActividad?: string,
+    public motivo?: string,
     public tipoActividad?: string,
     public zonaAula?: string,
     public periodo?: string
@@ -50,6 +52,7 @@ export interface IActividad {
       this.pickerDesde =  pickerDesde;
       this.pickerHasta =  pickerHasta;
       this.estadoActividad =  estadoActividad;
+      this.motivo =  motivo;
       this.tipoActividad =  tipoActividad;
       this.zonaAula =  zonaAula;
       this.periodo = periodo;

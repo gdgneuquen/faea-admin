@@ -7,6 +7,7 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { AuthService } from '../model/auth.service';
 import { ActividadService } from '../model/actividad.service';
 import { AulaService } from '../model/aula.service';
+import { EstadoService } from '../model/estado.service';
 import { TipoActividadService } from '../model/tipo-actividad.service';
 
 import * as moment from 'moment';
@@ -42,6 +43,7 @@ export class ActividadFormComponent implements OnInit  {
     public actividadService: ActividadService,
     public aulaService: AulaService,
     public tipoActividadService: TipoActividadService,
+    public estadoService: EstadoService,
     private router: Router,
     private activatedRoute: ActivatedRoute
     ) { }
@@ -69,8 +71,9 @@ export class ActividadFormComponent implements OnInit  {
      this.actividadService.getActividadById(this.id)
          .subscribe(
              actividad => {
-               
-               this.actividad = this.actividadService.translateActividad({$key:actividad.key,...actividad.payload.val()});
+               typeof actividad.payload.val().motivo == 'undefined' ? this.actividad={motivo:'',...actividad.payload.val()} : this.actividad=actividad.payload.val();
+      
+               this.actividad = this.actividadService.translateActividad({$key:actividad.key,...this.actividad});
                this.actividadService.form.setValue(this.actividad);
                this.mode = 'update';
              },

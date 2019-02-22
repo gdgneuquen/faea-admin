@@ -88,10 +88,16 @@
                 <mat-icon>edit_outline</mat-icon>
           </button>
           <button mat-icon-button
-                matTooltip="Borrar Actividad"
-                (click)="deleteActividad(row.key)">
-                <mat-icon>delete_outline</mat-icon>
+                matTooltip="Copiar Actividad"
+                (click)="copiarActividad(row.$key)">
+                <mat-icon>file_copy</mat-icon>
           </button>
+          <button mat-icon-button
+                matTooltip="Borrar Actividad"
+                (click)="deleteActividad(row.$key)">
+                <mat-icon>delete_outline</mat-icon>
+        </button>
+          
       </td>
   </ng-container>
 

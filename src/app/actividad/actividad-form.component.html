@@ -1,6 +1,6 @@
 
 <form [formGroup]="actividadService.form" class="normal-form" (submit)="onSubmit()">
-  <mat-grid-list cols="2" rowHeight="400px">
+  <mat-grid-list cols="2" rowHeight="500px">
     <mat-grid-tile>
       <div class="controles-container">
 
@@ -46,6 +46,19 @@
             </ng-container>
           </mat-select>
       </mat-form-field>
+
+      <mat-form-field>
+        <mat-select formControlName="estado" placeholder="Estado*">
+          <ng-container *ngFor="let estado of estadoService.array">
+            <mat-option value="{{estado.nombre}}">{{estado.nombre}}</mat-option>
+          </ng-container>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input formControlName="motivo" matInput placeholder="Motivo por Cambio Estado">
+      <mat-error>Este Campo es obligatorio.</mat-error>
+    </mat-form-field>
         
       </div>
     </mat-grid-tile>
@@ -95,7 +108,7 @@
         </div>
   
         <div class="button-row">
-          <button mat-raised-button color="primary" type="submit" [disabled]="actividadService.form.invalid">Enviar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="actividadService.form.invalid">Guardar</button>
           <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
         </div>
       </div>

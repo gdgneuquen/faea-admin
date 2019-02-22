@@ -4,6 +4,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActividadService } from '../model/actividad.service';
 import { AulaService } from '../model/aula.service';
 import { AuthService } from '../model/auth.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-actividad-list',
@@ -12,7 +13,6 @@ import { AuthService } from '../model/auth.service';
 })
 export class ActividadListComponent implements OnInit {
 
-  msgVal: string = ''; //mensaje de entrada del form
   displayedColumns: string[] = ['actividad','profe','dias','horario','fechainicio','fechafin','tipo' ,'aula','acciones'];
   dataSource: MatTableDataSource<any>;
   searchKey: string;
@@ -25,7 +25,8 @@ export class ActividadListComponent implements OnInit {
       private authService: AuthService,
       public actividadService: ActividadService,
       private aulaService: AulaService,
-      private router: Router
+      private router: Router,
+      private snackBar: MatSnackBar
   ){}
 
   ngOnInit(){
@@ -56,8 +57,8 @@ export class ActividadListComponent implements OnInit {
 
   deleteActividad(key:string){
       if(confirm("Desea borrar la Actividad?")) {
-      //  this.actividadService.removeActividad(key);
-       // this.msgVal = '';
+        this.actividadService.removeActividad(key);
+        this.openSnackBar("La Actividad fue borrada", "Borrar");
       }
   }
 
@@ -93,6 +94,12 @@ export class ActividadListComponent implements OnInit {
       this.showPeriodo=false;
       return this.displayedColumns=['actividad','profe','dias','horario', 'horafin','fechainicio','fechafin', 'tipo' ,'aula','acciones'];
     }   
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 1000,
+    });
   }
 
 }
