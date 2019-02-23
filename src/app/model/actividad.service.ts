@@ -83,6 +83,15 @@ export class ActividadService {
     return this.af.object('/actividades/' + id).snapshotChanges();
   }
 
+  copyActividad(id:string){
+    this.af.object('/actividades/' + id).snapshotChanges().subscribe(
+      actividad => {
+        let descripcion2:any  = actividad.payload.val();
+        descripcion2.descripcion=descripcion2.descripcion+ " (copia)";
+        this.af.list('/actividades').push(descripcion2);
+      });
+  }
+
   translateActividad(actividad:any){
     return{
       $key: actividad.$key,
@@ -127,7 +136,7 @@ export class ActividadService {
         horaFin: actividad.horaFin,
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
-        periodo: "1er Cuatrimestre",
+        periodo: "",
         pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
         pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
         tipoActividad: actividad.tipo,
@@ -154,7 +163,7 @@ export class ActividadService {
         horaFin: actividad.horaFin,
         horaInicio: actividad.horaInicio,
         nombre: actividad.referente,
-        periodo: "1er Cuatrimestre",
+        periodo: "",
         pickerDesde: actividad.fechaDesde == "" ? "" : this.datePipe.transform(actividad.fechaDesde, 'yyyy-MM-dd'),
         pickerHasta: actividad.fechaHasta == "" ? "" : this.datePipe.transform(actividad.fechaHasta, 'yyyy-MM-dd'),
         tipoActividad: actividad.tipo,

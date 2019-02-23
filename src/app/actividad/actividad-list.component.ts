@@ -62,6 +62,13 @@ export class ActividadListComponent implements OnInit {
       }
   }
 
+  copiarActividad(key:string){
+    if(confirm("Desea copiar la Actividad?")) {
+      this.actividadService.copyActividad(key);
+      this.openSnackBar("La Actividad fue copiada", "Copiar");
+    }
+}
+
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.

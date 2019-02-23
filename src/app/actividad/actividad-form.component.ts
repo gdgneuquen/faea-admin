@@ -64,32 +64,32 @@ export class ActividadFormComponent implements OnInit  {
     // _route is activated route service. this.route.params is observable.
     // subscribe is method that takes function to retrieve parameters when it is changed.
     this.parameters = this.activatedRoute.params.subscribe(params => {
-   // plus(+) is to convert 'id' to number
-   if (typeof params['id'] !== 'undefined') {
-     this.id = params['id'];
-     this.errorMessage = '';
-     this.actividadService.getActividadById(this.id)
-         .subscribe(
-             actividad => {
-               typeof actividad.payload.val().motivo == 'undefined' ? this.actividad={motivo:'',...actividad.payload.val()} : this.actividad=actividad.payload.val();
-      
-               this.actividad = this.actividadService.translateActividad({$key:actividad.key,...this.actividad});
-               this.actividadService.form.setValue(this.actividad);
-               this.mode = 'update';
-             },
-             error => {
-               // unauthorized access
-               if (error.status == 401 || error.status == 403) {
-                // this.staffService.unauthorizedAccess(error);
-               } else {
-                 this.errorMessage = error.data.message;
-               }
-             }
-         );
-   } else {
-     this.mode = 'create';
-     this.onClear();
-   }
+        // plus(+) is to convert 'id' to number
+        if (typeof params['id'] !== 'undefined') {
+          this.id = params['id'];
+          this.errorMessage = '';
+          this.actividadService.getActividadById(this.id)
+              .subscribe(
+                  actividad => {
+                    typeof actividad.payload.val().motivo == 'undefined' ? this.actividad={motivo:'',...actividad.payload.val()} : this.actividad=actividad.payload.val();
+            
+                    this.actividad = this.actividadService.translateActividad({$key:actividad.key,...this.actividad});
+                    this.actividadService.form.setValue(this.actividad);
+                    this.mode = 'update';
+                  },
+                  error => {
+                    // unauthorized access
+                    if (error.status == 401 || error.status == 403) {
+                      // this.staffService.unauthorizedAccess(error);
+                    } else {
+                      this.errorMessage = error.data.message;
+                    }
+                  }
+              );
+        } else {
+          this.mode = 'create';
+          this.onClear();
+        }
  });
 }
 
