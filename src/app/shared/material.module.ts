@@ -52,8 +52,5 @@ import * as Material from "@angular/material";
     MatMomentDateModule,
   ],
   declarations: [],
-  providers: [
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-  ]
 })
 export class MaterialModule { }

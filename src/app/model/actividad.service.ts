@@ -119,6 +119,7 @@ export class ActividadService {
   }
 
   insertActividad(actividad) {
+    
     this.af.list('/actividades').push(
       {
         descripcion: actividad.nombre,
@@ -146,6 +147,7 @@ export class ActividadService {
   }
 
   updateActividad(actividad: any){
+    console.log(actividad.fechaDesde);
     this.af.list('actividades').update(actividad.$key,
       {
         descripcion: actividad.nombre,
