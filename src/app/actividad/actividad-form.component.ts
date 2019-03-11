@@ -27,6 +27,7 @@ export class ActividadFormComponent implements OnInit  {
 
   id: string; 
   parameters: any;
+  retorno:string='/actividad';
   mode: string = '';
   errorMessage: string;
   actividad: any;
@@ -57,6 +58,13 @@ export class ActividadFormComponent implements OnInit  {
         map(value => typeof value === 'string' ? value : value.nombre),
         map(name => name ? this._filter(name) : this.aulaService.array.slice())
       );*/
+      this.activatedRoute.queryParams.subscribe(params => {
+        console.log(params); 
+        if (params['return'] == 'live') {
+          this.retorno='/live/list';
+        }
+
+      });
     this.getActividad();
   }
 
@@ -109,7 +117,7 @@ export class ActividadFormComponent implements OnInit  {
   }
 
   onCancel() {
-    this.router.navigate(['/actividad']);
+    this.router.navigate([this.retorno]);
   }
 
 
@@ -123,13 +131,13 @@ export class ActividadFormComponent implements OnInit  {
     if (this.actividadService.form.valid) {
      if (this.mode==='update'){
       this.actividadService.updateActividad(this.actividadService.form.value);
-      this.router.navigate(['/actividad']);
+      this.router.navigate([this.retorno]);
 
       }else{
      // this.actividad=this.actividadService.form.value;
       // delete this.actividad.key;
       this.actividadService.insertActividad(this.actividadService.form.value);
-      this.router.navigate(['/actividad']);
+      this.router.navigate([this.retorno]);
     }
   }
   }

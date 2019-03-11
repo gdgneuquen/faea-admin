@@ -22,6 +22,10 @@ export const routes: Routes = [
             {
                 path: 'actividad',
                 loadChildren: 'app/actividad/actividad.module#ActividadModule'
+            },
+            {
+                path: 'live',
+                loadChildren: 'app/live/live.module#LiveModule'
             }
         ]
     },

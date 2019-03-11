@@ -16,18 +16,18 @@
           <mat-error>Este Campo es obligatorio.</mat-error>
         </mat-form-field>
 
-        <!--mat-form-field>
+        <mat-form-field>
           <input formControlName="aula" matInput placeholder="Aula*">
           <mat-error>Este Campo es obligatorio.</mat-error>
-        </mat-form-field-->
+        </mat-form-field>
 
-        <mat-form-field>
+        <!---mat-form-field>
             <mat-select formControlName="aula" placeholder="Seleccione Aula*">
               <ng-container *ngFor="let aula of aulaService.array">
                 <mat-option value="{{aula.nombre}}">{{aula.nombre}}</mat-option>
               </ng-container>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field-->
 
          <!--mat-form-field>
             <input type="text" placeholder="Aula" matInput formControlName="aula" [matAutocomplete]="auto">

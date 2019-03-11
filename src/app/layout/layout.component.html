@@ -9,18 +9,18 @@
                     <mat-icon>event_available</mat-icon>
                     <span>Actividades</span>
                   </button>
-                  <button mat-menu-item>
+                  <button mat-menu-item [routerLink]="['/live', 'list']">
                         <mat-icon>phonelink_ring</mat-icon>
                         <span>App Live</span>
                       </button>
-                  <button mat-menu-item>
+                  <!---button mat-menu-item>
                     <mat-icon>account_balance</mat-icon>
                     <span>Aulas</span>
                   </button>
                   <button mat-menu-item>
                     <mat-icon>assignment</mat-icon>
                     <span>Tipo Actividades</span>
-                  </button>
+                  </button-->
                   <button mat-menu-item>
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Salir</span>
@@ -38,7 +38,7 @@
         
     
         <footer class="py-5 bg-light">
-                <p class="m-0 text-center">Copyright &copy; FaEA 2019 - Desarrollado por <a href="http://gdgneuquen.org">GDG Neuquén</a></p> 
+                <p class="m-0 text-center">Copyright &copy; FaEA 2019 - Desarrollado por  <a href="http://gdgneuquen.org"><img class="logo" src="./assets/images/logogdg.png" width="150"></a></p> 
         </footer>
 
         </div>
