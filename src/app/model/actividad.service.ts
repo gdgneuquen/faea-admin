@@ -79,6 +79,11 @@ export class ActividadService {
     return this.actividadesList.snapshotChanges();
   }
 
+  getActividadesByHora(): Observable<any> {
+    this.actividadesList = this.af.list('actividades',ref => ref.orderByChild('horaInicio'));
+    return this.actividadesList.snapshotChanges();
+  }
+
   getActividadById(id:string): Observable<any> {
     return this.af.object('/actividades/' + id).snapshotChanges();
   }

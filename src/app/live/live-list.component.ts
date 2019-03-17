@@ -43,7 +43,7 @@ export class LiveListComponent implements OnInit {
   }
 
   getActividades() {
-    return this.actividadService.getActividades().subscribe(
+    return this.actividadService.getActividadesByHora().subscribe(
 
       list => {
           this.actividades = [];
@@ -74,7 +74,7 @@ export class LiveListComponent implements OnInit {
 
   //que la fecha de hoy este en el periodo de la Actividad
   belongsToPeriodo(desde: any,hasta: any) {
-    return moment().isBetween(moment(desde, moment.ISO_8601), moment(hasta, moment.ISO_8601));
+    return moment().isBetween(moment(desde, moment.ISO_8601), moment(hasta, moment.ISO_8601).add(1,'day'));
   }
 
   isEventValid(dias: any,horaFin:any) {
