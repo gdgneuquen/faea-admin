@@ -13,7 +13,7 @@ import {MatSnackBar} from '@angular/material';
 })
 export class ActividadListComponent implements OnInit {
 
-  displayedColumns: string[] = ['actividad','profe','dias','horario','fechainicio','fechafin','tipo' ,'aula','acciones'];
+  displayedColumns: string[] = ['actividad','profe','dias','horario','fechainicio','fechafin','tipo' ,'aula','estado','acciones'];
   dataSource: MatTableDataSource<any>;
   searchKey: string;
   showPeriodo:boolean=false;
@@ -107,6 +107,29 @@ export class ActividadListComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 1000,
     });
+  }
+
+  setStyle(estado) {
+    switch (estado) {
+      case "Cambio": {
+        let style = {
+          'color': estado = "Cambio" ? 'orange' : 'black'
+        }
+        return style
+      }
+      case "Suspendida": {
+        let style = {
+          'color': estado = "Suspendida" ? 'red' : 'black'
+        }
+        return style
+      }
+      default: {
+        let style = {
+          'color': estado = "Normal" ? 'green' : 'black'
+        }
+        return style
+      }
+    }
   }
 
 }
