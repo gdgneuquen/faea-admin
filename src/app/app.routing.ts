@@ -17,15 +17,15 @@ export const routes: Routes = [
         children: [
             {
                 path: 'home',
-                loadChildren: 'app/home/home.module#HomeModule'
+                loadChildren: () => import('app/home/home.module').then(m => m.HomeModule)
             },
             {
                 path: 'actividad',
-                loadChildren: 'app/actividad/actividad.module#ActividadModule'
+                loadChildren: () => import('app/actividad/actividad.module').then(m => m.ActividadModule)
             },
             {
                 path: 'live',
-                loadChildren: 'app/live/live.module#LiveModule'
+                loadChildren: () => import('app/live/live.module').then(m => m.LiveModule)
             }
         ]
     },
