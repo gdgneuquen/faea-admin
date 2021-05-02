@@ -11,6 +11,7 @@ export const environment = {
     databaseURL: "https://faea-eventos-2564a.firebaseio.com",
     projectId: "faea-eventos-2564a",
     storageBucket: "faea-eventos-2564a.appspot.com",
-    messagingSenderId: "1072533022657"
+    messagingSenderId: "1072533022657",
+    appId: "1:1072533022657:web:a4db2d6d3b3e8cb1137140"
   }
 };

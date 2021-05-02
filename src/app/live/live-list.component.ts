@@ -1,10 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActividadService } from '../model/actividad.service';
 import { AulaService } from '../model/aula.service';
 import { AuthService } from '../model/auth.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 

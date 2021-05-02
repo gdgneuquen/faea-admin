@@ -4,6 +4,7 @@ import { NgModule, LOCALE_ID} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe,registerLocaleData } from '@angular/common';
 import { AppComponent } from './app.component';
+import { AngularFireModule } from '@angular/fire';
 
 //temp
 import { AuthenticationComponent } from './authentication/authentication.component';
@@ -18,11 +19,11 @@ import { LayoutComponent } from './layout/layout.component';
 import { P404Component } from './page/404.component';
 
 // Model & Servicios
-import { AuthService } from './model/auth.service';
 import { FirebaseconnectionService } from './model/firebaseconnection.service';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthService } from './model/auth.service';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 
 //Shared
 import { MaterialModule } from './shared/material.module';
@@ -43,10 +44,10 @@ registerLocaleData(localeEsAr);
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     MaterialModule,
