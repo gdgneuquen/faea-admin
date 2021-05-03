@@ -1,6 +1,5 @@
 import { Component, Injectable  } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 
 
 @Injectable()
@@ -26,10 +25,10 @@ export class AuthService {
   }*/
 
   loginWithGoogle() {
-    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+   // this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
   logout() {
-    this.afAuth.auth.signOut();
+   //this.afAuth.auth.signOut();
   }
   
 
@@ -60,7 +59,7 @@ export class AuthService {
 
   loginWithEmail(email: string, password: string) {
     this.afAuth
-      .auth
+  //    .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
         console.log('loginWithEmail Auth Response', value);
@@ -70,14 +69,14 @@ export class AuthService {
       });
   }
 
-  loginAnonymous() {
+/*  loginAnonymous() {
     return this.afAuth.auth.signInAnonymously().then(function(result){
       console.log('Anonymous Auth Response', result);
     }).catch(function(error) {
       console.log(error);
       // Handle Errors here.
     });
-  }
+  }*/
 
   /*logout() {
     this.afAuth.auth.signOut().then(function() {

@@ -2,5 +2,14 @@
   "projects": {
     "default": "faea-admin",
     "admin": "faea-admin"
+  },
+  "targets": {
+    "faea-eventos-2564a": {
+      "hosting": {
+        "eventos": [
+          "faea-eventos-2564a"
+        ]
+      }
+    }
   }
 }

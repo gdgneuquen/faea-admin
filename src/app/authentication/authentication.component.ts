@@ -38,7 +38,7 @@ export class AuthenticationComponent implements OnInit {
   }
 
   loginAnonymous() {
-    return this.authService.loginAnonymous();
+   // return this.authService.loginAnonymous();
   }
   isUserLoggedIn(){
 
